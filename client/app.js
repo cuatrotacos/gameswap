@@ -10,8 +10,10 @@ angular
   	'ui.router',
     'messages.controller',
     'messages.service',
-    'index.controller',
-    'index.services'])
+    'navbar.controller',
+    'navbar.services',
+    'offers.controller',
+    'offers.services'])
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider){
 
@@ -20,24 +22,70 @@ angular
 	  $stateProvider
 		  .state('main', {
 			  url: '/',
-			  templateUrl: './models/main/main.html',
+        views: {
+          "": {
+            templateUrl: './models/main/main.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        }
 		  })
+      .state('offers', {
+        url: '/offers',
+        views: {
+          "": {
+            templateUrl: './models/offers/offers.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        }
+      })
 		  .state('signin', {
 			  url: '/signin',
-			  templateUrl: './models/auth/signin/signin.html',
+        views: {
+          "": {
+            templateUrl: './models/auth/signin/signin.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        }
 		  })
 		  .state('signup', {
 			  url: '/signup',
-			  templateUrl: './models/auth/signup/signup.html',
+        views: {
+          "": {
+            templateUrl: './models/auth/signup/signup.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        }
 		  })
 		  .state('userprofile', {
 			  url: '/userprofile',
-		    templateUrl: './models/userprofile/userprofile.html',
+        views: {
+          "": {
+            templateUrl: './models/userprofile/userprofile.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        },
         authenticate: true
 		  })
       .state('messages', {
         url: '/messages',
-        templateUrl: './models/messages/messages.html',
+        views: {
+          "": {
+            templateUrl: './models/messages/messages.html'
+          },
+          "navbar" : {
+            templateUrl: './models/navbar/navbar.html'
+          }
+        },
         authenticate: true
       });
 
@@ -57,9 +105,8 @@ angular
   };
   return attach;
 })
-.run(function ($rootScope, $location, AuthServices, IndexServices) {
+.run(function ($rootScope, $location, AuthServices) {
   $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
-    IndexServices.checkState();
     if (toState.authenticate && !AuthServices.isAuth()) {
       e.preventDefault();
       $location.path('/signin');
