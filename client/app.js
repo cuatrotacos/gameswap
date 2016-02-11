@@ -20,24 +20,24 @@ angular
 	  $stateProvider
 		  .state('main', {
 			  url: '/',
-			  templateUrl: './main/main.html',
+			  templateUrl: './models/main/main.html',
 		  })
 		  .state('signin', {
 			  url: '/signin',
-			  templateUrl: './auth/signin/signin.html',
+			  templateUrl: './models/auth/signin/signin.html',
 		  })
 		  .state('signup', {
 			  url: '/signup',
-			  templateUrl: './auth/signup/signup.html',
+			  templateUrl: './models/auth/signup/signup.html',
 		  })
 		  .state('userprofile', {
 			  url: '/userprofile',
-		    templateUrl: './userprofile/userprofile.html',
+		    templateUrl: './models/userprofile/userprofile.html',
         authenticate: true
 		  })
       .state('messages', {
         url: '/messages',
-        templateUrl: './messages/messages.html',
+        templateUrl: './models/messages/messages.html',
         authenticate: true
       });
 
@@ -62,7 +62,7 @@ angular
     IndexServices.checkState();
     if (toState.authenticate && !AuthServices.isAuth()) {
       e.preventDefault();
-      $location.path('/signin');      
+      $location.path('/signin');
     }
   });
 });

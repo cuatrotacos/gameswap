@@ -17,6 +17,22 @@ angular.module('profile.service', [])
 		})
 	};
 
+	var getgbdata = function (game) {
+		var url = 'http://www.giantbomb.com/api/search/?api_key=4216ee7440e25a59a9417df44629dea10ca7e202&format=json&query=' + game.title +'&resources=game'
+
+	  return $http({
+	  	method: 'JSONP',
+	  	url: url,
+	  	params: {
+	  		format: 'jsonp',
+	  		json_callback: 'JSON_CALLBACK'
+	  	}
+		})
+	  .then(function (gbresults) {
+	    return gbresults.data.results
+	  })
+	}
+
 	var addGameOffering = function(game){
 		var token = $window.localStorage.getItem('com.gameswap');
 
@@ -75,6 +91,7 @@ angular.module('profile.service', [])
 	};
 
 	return {
+		getgbdata: getgbdata,
 		getProfileData: getProfileData,
 		addGameOffering: addGameOffering,
 		addGameSeeking: addGameSeeking,

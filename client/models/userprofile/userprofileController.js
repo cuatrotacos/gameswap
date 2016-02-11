@@ -1,12 +1,12 @@
 angular.module('userprofile', [])
-  .controller('ProfileController', function(AuthServices, ProfileServices){
+  .controller('ProfileController', function($scope, AuthServices, ProfileServices){
 
     var userInfo = this;
 
     this.gamesOffered = [];
     this.gamesSeeking = [];
     this.updateClicked = false;
-
+    $scope.gbgames = []
     var loadProfile = function() {
       ProfileServices.getProfileData()
         .then(function(resp) {
@@ -38,32 +38,33 @@ angular.module('userprofile', [])
 
   	this.addOffer = function(game) {
       if(game.platform){
-        ProfileServices.addGameOffering({
+        ProfileServices.getgbdata({
   			  title: game.title,
   			  platform: game.platform,
           condition: game.condition
-  			}).then(function(resp){
+  			}).then(function(gbresults){
+          console.log("+++ 46 userprofileController.js gbresults: ", gbresults)
+          $scope.gbgames = gbresults
 
-          setTimeout(loadProfile, 200);
+          // setTimeout(loadProfile, 200);
         });
       } else {
         console.log('ERROR: no platform chosen');
-        this.noOffPlatform = true;         
+        this.noOffPlatform = true;
       }
-  	};
+    };
 
-  	this.addSeek = function(game) {
+    this.addSeek = function(game) {
       if(game.platform){
         ProfileServices.addGameSeeking({
           title: game.title,
-          platform: game.platform 
+          platform: game.platform
         }).then(function(resp){
-
           setTimeout(loadProfile, 200);
         });
       } else {
         console.log('ERROR: no platform chosen');
-        this.noSeekPlatform = true;  
+        this.noSeekPlatform = true;
       }
   	};
 
@@ -72,5 +73,5 @@ angular.module('userprofile', [])
   	}
 
     loadProfile();
-  
+
   })
