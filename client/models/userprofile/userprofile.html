@@ -54,6 +54,12 @@
           </select>
           <p ng-show="profile.noOffPlatform" class='text-danger'>Please choose a platform.</p>
         </div>
+        <div ng-repeat="game in gbgames">
+          <div>
+            <img ng-src="{{game.image.thumb_url}}">
+            </div>
+          {{game.name}}
+        </div>
         <div class='col-md-1 nopadding-left'>
           <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
         </div>
