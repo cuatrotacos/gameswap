@@ -22,11 +22,14 @@
   <script type='text/javascript' src='models/userprofile/profileService.js'></script>
   <script type='text/javascript' src='models/messages/messagesController.js'></script>
   <script type='text/javascript' src='models/messages/messagesService.js'></script>
-  <script type='text/javascript' src='indexController.js'></script>
-  <script type='text/javascript' src='indexServices.js'></script>
+  <script type='text/javascript' src='models/offers/offersController.js'></script>
+  <script type='text/javascript' src='models/offers/offersService.js'></script>
+  <script type='text/javascript' src='models/navbar/navbarController.js'></script>
+  <script type='text/javascript' src='models/navbar/navbarServices.js'></script>
   <title>Game Swap</title>
 </head>
 <body>
+  <div ui-view="navbar"></div>
   <div ui-view></div>
 <footer>
   <!-- TODO: Team with copyright -->
