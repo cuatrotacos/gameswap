@@ -165,9 +165,10 @@ router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
   var condition = 'default condition';
   var description = 'default description';
   var rating = 5;
+  var gbid = req.body.game.gbid;
 
-  db.addGame(title, platform, rating, description, function(success) {
-    db.addOffering(req.user.id, title, platform, condition);
+  db.addGame(title, platform, rating, description, gbid, function(success) {
+    db.addOffering(req.user.id, title, platform, condition, gbid);
     res.sendStatus(201);
   });
 });
