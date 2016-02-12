@@ -1,6 +1,6 @@
 angular.module('profile.service', [])
 
-.factory('ProfileServices', function($http, $window){
+.factory('ProfileServices', function($http, $window, keysFactory){
 
 	var getProfileData = function(){
 		var token = $window.localStorage.getItem('com.gameswap');
@@ -17,8 +17,8 @@ angular.module('profile.service', [])
 		})
 	};
 
-	var getgbdata = function (game) {
-		var url = 'http://www.giantbomb.com/api/search/?api_key=4216ee7440e25a59a9417df44629dea10ca7e202&format=json&query=' + game.title +'&resources=game'
+	var getgbdata = function (userGame) {
+		var url = 'http://www.giantbomb.com/api/search/?api_key=' + keysFactory.giantBombKey + '&format=json&query=' + userGame.title +'&resources=game'
 
 	  return $http({
 	  	method: 'JSONP',
@@ -29,7 +29,19 @@ angular.module('profile.service', [])
 	  	}
 		})
 	  .then(function (gbresults) {
-	    return gbresults.data.results
+	  	var gameResults = {};
+	  	var gameArray = [];
+	  	_.each(gbresults.data.results, function(game){
+	  	  _.each(game.platforms, function (platform) {
+	  	    if (platform.abbreviation === userGame.platform) {
+	  	      gameResults[game.name] = game
+	  	    }
+	  	  })
+	  	})
+	    for(var key in gameResults){
+	      gameArray.push(gameResults[key])
+	    }
+	    return gameArray
 	  })
 	}
 

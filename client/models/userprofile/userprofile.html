@@ -54,14 +54,20 @@
           </select>
           <p ng-show="profile.noOffPlatform" class='text-danger'>Please choose a platform.</p>
         </div>
-        <div ng-repeat="game in gbgames">
-          <div>
-            <img ng-src="{{game.image.thumb_url}}">
-            </div>
-          {{game.name}}
-        </div>
+        <div>
         <div class='col-md-1 nopadding-left'>
           <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
+        </div>
+
+        <div class="container-fluid">
+          <div ng-repeat="game in gbgames" class="col-lg-3 thumb">
+            <div class="text-center">
+              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
+                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
