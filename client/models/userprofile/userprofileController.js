@@ -49,7 +49,6 @@ angular.module('userprofile', [])
   			}).then(function(gbresults){
           $scope.gbgames = gbresults
 
-          // setTimeout(loadProfile, 200);
         });
       } else {
         console.log('ERROR: no platform chosen');
