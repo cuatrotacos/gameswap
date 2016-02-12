@@ -1,8 +1,8 @@
 <div class='row nav head-space-md foot-space-sm' ng-controller='NavbarController as navbar'>
   <div class='col-md-1'></div>
   <a ui-sref='main' class='col-md-2'>GameSwap</a>
+  <a class='col-md-1' ui-sref='offers'>Offers</a>
   <div class='col-md-5'></div>
-  <!-- <a class='col-md-1' ui-sref='offers'>Offers</a> -->
   <a ng-show='!navbar.isAuth' class='col-md-1 col-md-offset-2' ui-sref='signin'>  Sign In  </a>
   <a ng-show='navbar.isAuth' class='col-md-1' ui-sref='userprofile'>Profile</a>
   <a ng-show='navbar.isAuth' class='col-md-1' ui-sref='messages'>Messages</a>
