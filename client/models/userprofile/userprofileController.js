@@ -58,7 +58,10 @@ angular.module('userprofile', [])
 
     this.addOffer = function(game) {
       $scope.gbgames = [];
-      ProfileServices.addGameOffering(game);
+      ProfileServices.addGameOffering(game)
+      .then(function(game) {
+        setTimeout(loadProfile, 200);
+      });
     }
 
     this.addSeek = function(game) {

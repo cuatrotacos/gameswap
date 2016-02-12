@@ -54,6 +54,7 @@ angular.module('profile.service', [])
 			data: {game: game, token: token}
 		})
 		.then(function(resp){
+
 			return resp;
 		}, function(error) {
 			console.error('ERROR!!! ', error);
