@@ -37,16 +37,18 @@ angular.module('userprofile', [])
     };
 
   	this.addOffer = function(game) {
+      var platform = "PS4"
+      if(game.platform === "Xbox One"){
+        platform = "XONE"
+      }
       if(game.platform){
         ProfileServices.getgbdata({
   			  title: game.title,
-  			  platform: game.platform,
+  			  platform: platform,
           condition: game.condition
   			}).then(function(gbresults){
-          console.log("+++ 46 userprofileController.js gbresults: ", gbresults)
           $scope.gbgames = gbresults
 
-          // setTimeout(loadProfile, 200);
         });
       } else {
         console.log('ERROR: no platform chosen');
