@@ -60,6 +60,9 @@
         </div>
 
         <div class="container-fluid">
+          <div class="text-center" ng-if="gamesNotFound">
+            <p class="text-center">NO GAMES FOUND</p>
+          </div>
           <div ng-repeat="game in gbgames" class="col-lg-3 thumb" ng-click="profile.addOffer(game)">
             <div class="text-center">
               <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
