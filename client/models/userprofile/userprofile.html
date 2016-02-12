@@ -38,7 +38,7 @@
   </table>
 
 
-  <form class='foot-space-sm' name="offerForm" ng-submit="profile.addOffer(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
+  <form class='foot-space-sm' name="offerForm" ng-submit="profile.getGBGames(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : offerForm.title.$invalid && !offerForm.title.$pristine }">
       Add a new title:
       <div class='row'>
@@ -56,11 +56,11 @@
         </div>
         <div>
         <div class='col-md-1 nopadding-left'>
-          <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
+          <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Search</button>
         </div>
 
         <div class="container-fluid">
-          <div ng-repeat="game in gbgames" class="col-lg-3 thumb">
+          <div ng-repeat="game in gbgames" class="col-lg-3 thumb" ng-click="profile.addOffer(game)">
             <div class="text-center">
               <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
                 <p class="text-center" style="max-height: 25px">{{game.name}}</p>

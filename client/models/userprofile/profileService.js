@@ -34,6 +34,7 @@ angular.module('profile.service', [])
 	  	_.each(gbresults.data.results, function(game){
 	  	  _.each(game.platforms, function (platform) {
 	  	    if (platform.abbreviation === userGame.platform) {
+	  	    	game.userPlatform = userGame.platform;
 	  	      gameResults[game.name] = game
 	  	    }
 	  	  })
@@ -47,7 +48,6 @@ angular.module('profile.service', [])
 
 	var addGameOffering = function(game){
 		var token = $window.localStorage.getItem('com.gameswap');
-
 		return $http({
 			method: 'POST',
 			url: '/addtoofferings',

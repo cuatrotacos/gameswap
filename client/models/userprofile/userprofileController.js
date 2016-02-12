@@ -36,7 +36,7 @@ angular.module('userprofile', [])
       this.toggleUpdate();
     };
 
-  	this.addOffer = function(game) {
+  	this.getGBGames = function(game) {
       var platform = "PS4"
       if(game.platform === "Xbox One"){
         platform = "XONE"
@@ -55,6 +55,11 @@ angular.module('userprofile', [])
         this.noOffPlatform = true;
       }
     };
+
+    this.addOffer = function(game) {
+      $scope.gbgames = [];
+      ProfileServices.addGameOffering(game);
+    }
 
     this.addSeek = function(game) {
       if(game.platform){

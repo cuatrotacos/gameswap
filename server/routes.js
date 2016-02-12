@@ -160,13 +160,14 @@ router.put('/profile/update', auth.checkUser, function(req, res, next) {
   @return 201
 */
 router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
-  var title = req.body.game.title;
-  var platform = req.body.game.platform;
+  console.log('req.body.game', req.body.game);
+  var title = req.body.game.name;
+  var platform = req.body.game.userPlatform;
   var condition = 'default condition';
   var description = 'default description';
-  var thumbnail = req.body.game.thumbnail;
+  var thumbnail = req.body.game.image.thumb_url;
   var rating = 5;
-  var gbid = req.body.game.gbid;
+  var gbid = req.body.game.id;
 
   db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
     db.addOffering(req.user.id, title, platform, condition, gbid);
