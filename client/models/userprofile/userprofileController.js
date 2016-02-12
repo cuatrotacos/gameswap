@@ -6,7 +6,9 @@ angular.module('userprofile', [])
     this.gamesOffered = [];
     this.gamesSeeking = [];
     this.updateClicked = false;
-    $scope.gbgames = []
+    $scope.gbgames = [];
+    $scope.gamesNotFound = false;
+
     var loadProfile = function() {
       ProfileServices.getProfileData()
         .then(function(resp) {
@@ -37,6 +39,9 @@ angular.module('userprofile', [])
     };
 
   	this.getGBGames = function(game) {
+      $scope.gamesNotFound = false;
+      $scope.gbgames = [];
+
       var platform = "PS4"
       if(game.platform === "Xbox One"){
         platform = "XONE"
@@ -47,8 +52,11 @@ angular.module('userprofile', [])
   			  platform: platform,
           condition: game.condition
   			}).then(function(gbresults){
-          $scope.gbgames = gbresults
-
+          if (gbresults.length) {
+            $scope.gbgames = gbresults
+          } else {
+            $scope.gamesNotFound = true;
+          }
         });
       } else {
         console.log('ERROR: no platform chosen');
