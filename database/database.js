@@ -63,11 +63,11 @@ module.exports = {
     });
   },
 
-  addGame: function (title, platform, rating, description, gbid, callback) {
+  addGame: function (title, platform, rating, description, thumbnail, gbid, callback) {
     var check = 'SELECT * FROM Games WHERE gbid = ?;'
     var checkValues = gbid;
-    var insert = 'INSERT IGNORE into Games (title, platform, rating, description, gbid) values(?, ?, ?, ?, ?);';
-    var insertValues = [title, platform, rating, description, gbid];
+    var insert = 'INSERT IGNORE into Games (title, platform, rating, description, thumbnail, gbid) values(?, ?, ?, ?, ?, ?);';
+    var insertValues = [title, platform, rating, description, thumbnail, gbid];
 
     connection.query(check, checkValues, function(err, data) {
       if (err) {
