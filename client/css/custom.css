@@ -24,7 +24,7 @@ img {
 	margin-bottom: 10px;
 }
 
-.jumbotron {
+.main-poster {
 	position: relative;
 	background: black url("../assets/images/jumbotron.jpg") center center;
 	width: 100%;
