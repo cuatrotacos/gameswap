@@ -164,10 +164,11 @@ router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
   var platform = req.body.game.platform;
   var condition = 'default condition';
   var description = 'default description';
+  var thumbnail = req.body.game.thumbnail;
   var rating = 5;
   var gbid = req.body.game.gbid;
 
-  db.addGame(title, platform, rating, description, gbid, function(success) {
+  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
     db.addOffering(req.user.id, title, platform, condition, gbid);
     res.sendStatus(201);
   });
@@ -191,9 +192,10 @@ router.post('/addtoseeking', auth.checkUser, function(req, res, next) {
   var title = req.body.game.title;
   var platform = req.body.game.platform;
   var description = 'default description';
+  var thumbnail = req.body.game.thumbnail;
   var rating = 5;
 
-  db.addGame(title, platform, rating, description, function(success) {
+  db.addGame(title, platform, rating, description, thumbnail, function(success) {
     db.addSeeking(req.user.id, title, platform);
     res.sendStatus(201);
   });
