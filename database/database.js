@@ -186,5 +186,26 @@ module.exports = {
       if (err) console.error('error in db allMessages: ', err);
       callback(data);
     });
+  },
+
+  allOfferings: function(callback) {
+    var sql = "SELECT Users.username, Games.* from Games, Offering, Users WHERE Games.id = Offering.gameid AND Users.id = Offering.userid;";
+
+    connection.query(sql, function(err, data) {
+      if (err) console.error('error in db allOffering: ', err);
+      callback(data);
+    })
   }
+
+
+
+
+
+
+
+
+
+
+
+
 }
