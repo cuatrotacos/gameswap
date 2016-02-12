@@ -108,6 +108,9 @@ angular
   return attach;
 })
 .run(function ($rootScope, $location, AuthServices) {
+  //Use local server
+  $rootScope.url = "http://localhost:3000";
+
   $rootScope.$on('$stateChangeStart', function (e, toState, toParams, fromState, fromParams) {
     if (toState.authenticate && !AuthServices.isAuth()) {
       e.preventDefault();

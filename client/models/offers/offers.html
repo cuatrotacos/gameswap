@@ -1,11 +1,23 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">This will contain a carousel of games people want to trade</p>
+    <pre> The offers: {{offers.test}} {{offers.offers}} </pre>
+    <ul>
+      <li ng-repeat="game in offers.offers"
+          ng-click="offers.selectGame()">
+          <div class="offered-game">
+            <img ng-src="game.thumbnail" />
+            <p ng-bind="game.title"></p>
+          </div>
+      </li>
+    </ul>
+<!--
+
     <div class="row">
       <img class='boxart col-sm-4' src="../../assets/images/Fallout4PS4.jpg">
       <img class='boxart col-sm-4' src="../../assets/images/Farcry4PS4.jpg">
       <img class='boxart col-sm-4' src="../../assets/images/Halo5Xbox.jpg">
-    </div>
+    </div> -->
   </div>
   <div class="col-md-4 line-break bg-success">
     This is the picture of the game you picked!
