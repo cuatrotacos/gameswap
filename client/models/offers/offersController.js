@@ -6,14 +6,22 @@ angular.module('offers.controller', [])
     .then(function(offers){
       console.log("+++line 7 offers", offers.data.offerings)
       this.offers = offers.data.offerings;
-      debugger;
-    });
+    }.bind(this));
   }
-  this.test = "test"
 
+  this.selectedGame = {};
+
+  this.test = "test"
   this.isAuth = AuthServices.isAuth();
 
-  this.selectGame = function(){};
+  this.selectGame = function(game) {
+    if (this.selectedGame === game) {
+      this.selectedGame = {};
+    } else {
+      this.selectedGame = game;
+      this.gameSwappers = OffersServices.getSwappers(game, this.offers);
+    }
+  }
 
   this.init();
-});
+})

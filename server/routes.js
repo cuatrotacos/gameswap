@@ -242,5 +242,13 @@ router.get('/allOfferings', auth.checkUser, function(req, res, next) {
   })
 });
 
+router.get('/allOfferingsByGame', auth.checkUser, function(req, res, next) {
+  var gameid = req.query.gameid;
+  console.log("getting all game offerings for gameid #"+ gameid);
+  db.allOfferingsByGame(gameid, function(data){
+    res.json({users: data})
+  })
+})
+
 
 module.exports = router;

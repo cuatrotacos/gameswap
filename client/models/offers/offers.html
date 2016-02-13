@@ -1,34 +1,39 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">This will contain a carousel of games people want to trade</p>
-    <pre> The offers: {{offers.test}} {{offers.offers}} </pre>
-    <ul>
-      <li ng-repeat="game in offers.offers"
-          ng-click="offers.selectGame()">
-          <div class="offered-game">
-            <img ng-src="game.thumbnail" />
-            <p ng-bind="game.title"></p>
+    <div class="row game-container">
+      <div ng-repeat="game in offers.offers"
+          ng-click="offers.selectGame(game)"
+          class="col-md-4 offered-game"
+          ng-class="{'selected-game': ({{game.id}} === selectedGame.id)}">
+          <div class="center">
+            <img ng-src="{{game.thumbnail}}" class="center boxart"/>
+            <p ng-bind="game.title" class="text-center"></p>
           </div>
-      </li>
-    </ul>
-<!--
+      </div>
+    </div>
+  </div>
+  <div ng-if="offers.selectedGame.id">
 
-    <div class="row">
-      <img class='boxart col-sm-4' src="../../assets/images/Fallout4PS4.jpg">
-      <img class='boxart col-sm-4' src="../../assets/images/Farcry4PS4.jpg">
-      <img class='boxart col-sm-4' src="../../assets/images/Halo5Xbox.jpg">
-    </div> -->
-  </div>
-  <div class="col-md-4 line-break bg-success">
-    This is the picture of the game you picked!
-  </div>
-  <div class="col-md-4 bg-warning">
-    This is a list of people who have that game!
-  </div>
-  <div class="col-md-4 bg-info">
-    This is a list of games they want to trade for.
-  </div>
-  <div class="line-break">
-    This is the call to action! (Log in to trade!)
+    <div class="col-md-4">
+      <div class="offered-game">
+        <div class="center">
+          <img ng-src="{{offers.selectedGame.thumbnail}}" class="center boxart"/>
+          <p ng-bind="offers.selectedGame.title" class="text-center"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <p> Users Offering {{offers.selectedGame.title}}</p>
+      <ul ng-repeat="users in offers.gameSwappers"
+    </div>
+    <div class="col-md-4 bg-info">
+      This is a list of games they want to trade for.
+    </div>
+    <div class="line-break">
+      This is the call to action! (Log in to trade!)
+    </div>
+
   </div>
 </div>
