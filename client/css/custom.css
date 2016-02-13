@@ -173,3 +173,36 @@ table.margin-top {
 	background-color: black;
 	color: white;
 }
+
+/*
+****************
+Offers
+****************
+*/
+
+.offered-game {
+	height: 410px;
+	width: 350px;
+	background-color: #7CB3E4;
+	border-radius: 5px;
+	padding: 10px;
+	display: inline-block;
+	float: none;
+	margin: 0 10px;
+}
+.offered-game:first-child {
+	margin-left: 0;
+}
+
+.offered-game.center.boxart {
+	margin: 0 auto;
+}
+
+.game-container {
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.selected-game {
+	background-color: #E8CF0C;
+}

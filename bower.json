@@ -22,6 +22,7 @@
     "angular-ui-router": "~0.2.15",
     "bootstrap-select": "~1.9.3",
     "underscore": "^1.8.3",
+    "angular-animate": "~1.5.0",
     "angular-carousel": "^1.0.1"
   },
   "resolutions": {

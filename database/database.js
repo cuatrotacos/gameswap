@@ -1,6 +1,8 @@
 var mysql = require('mysql');
 var tables = require('./tables.js');
 var db_config = require('../server/utilities').dbConfig;
+var async = require('async');
+var _ = require('underscore');
 
 var createConnection = function createConnection() {
     connection = mysql.createConnection(db_config);
@@ -189,23 +191,31 @@ module.exports = {
   },
 
   allOfferings: function(callback) {
-    var sql = "SELECT Users.username, Games.* from Games, Offering, Users WHERE Games.id = Offering.gameid AND Users.id = Offering.userid;";
+    var sql = "SELECT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
+    connection.query(sql, function(err, games) {
+      if (err) console.log('errror in db allOfferingsByGame: ', err);
+      async.map(games, function(game, callback){
+        var sql = "SELECT Users.username, Users.id FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+        var values = game.id;
+        connection.query(sql, values, function(err, users) {
+          if (err) console.log('errror in db allOfferingsByGame: ', err);
+          game.users = users;
+          callback(err, game)
+        });
+      }, function(err, results) {
+        callback(results)
+      });
+    });
+  },
 
-    connection.query(sql, function(err, data) {
-      if (err) console.error('error in db allOffering: ', err);
+  allOfferingsByGame: function(gameid, callback) {
+    var sql = "SELECT Users.username FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+    var values = gameid;
+
+    connection.query(sql, values, function(err, data) {
+      if (err) console.log('errror in db allOfferingsByGame: ', err);
       callback(data);
-    })
+    });
   }
-
-
-
-
-
-
-
-
-
-
-
 
 }
