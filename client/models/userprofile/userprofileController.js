@@ -42,14 +42,10 @@ angular.module('userprofile', [])
       $scope.gamesNotFound = false;
       $scope.gbgames = [];
 
-      var platform = "PS4"
-      if(game.platform === "Xbox One"){
-        platform = "XONE"
-      }
       if(game.platform){
         ProfileServices.getgbdata({
   			  title: game.title,
-  			  platform: platform,
+  			  platform: game.platform,
           condition: game.condition
   			}).then(function(gbresults){
           if (gbresults.length) {

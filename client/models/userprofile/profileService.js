@@ -33,16 +33,16 @@ angular.module('profile.service', [])
 	  	var gameArray = [];
 	  	_.each(gbresults.data.results, function(game){
 	  	  _.each(game.platforms, function (platform) {
-	  	    if (platform.abbreviation === userGame.platform) {
+	  	    if (platform.name === userGame.platform) {
 	  	    	game.userPlatform = userGame.platform;
-	  	      gameResults[game.name] = game
+	  	      gameResults[game.name] = game;
 	  	    }
-	  	  })
-	  	})
+	  	  });
+	  	});
 	    for(var key in gameResults){
-	      gameArray.push(gameResults[key])
+	      gameArray.push(gameResults[key]);
 	    }
-	    return gameArray
+	    return gameArray;
 	  })
 	}
 
