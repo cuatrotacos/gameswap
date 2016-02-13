@@ -13,8 +13,15 @@ angular.module('offers.services', [])
     return q.promise;
   }
 
-  var getSwappers = function(game, offers) {
-    
+  var getSeekingByUser = function(userid) {
+    var q = $q.defer();
+    $http.get($rootScope.url + "/allSeekingByUser?userid=" + userid)
+    .then(function(offers){
+      q.resolve(seekings);
+    }, function(err){
+      q.resolve(err);
+    })
+    return q.promise;
   }
 
   return {

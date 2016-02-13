@@ -165,7 +165,7 @@ router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
   var platform = req.body.game.userPlatform;
   var condition = 'default condition';
   var description = 'default description';
-  var thumbnail = req.body.game.image.thumb_url;
+  var thumbnail = req.body.game.image.medium_url;
   var rating = 5;
   var gbid = req.body.game.id;
 
@@ -248,6 +248,14 @@ router.get('/allOfferingsByGame', auth.checkUser, function(req, res, next) {
   console.log("getting all game offerings for gameid #"+ gameid);
   db.allOfferingsByGame(gameid, function(data){
     res.json({users: data})
+  })
+})
+
+router.get('/allSeekingByUser', auth.checkUser, function(req, res, next) {
+  var userid = req.query.userid;
+  console.log("getting all game seekings for user #"+ userid);
+  db.allSeekingByUser(userid, function(data){
+    res.json({games: data})
   })
 })
 

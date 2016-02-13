@@ -4,19 +4,19 @@ var db_config = require('../server/utilities').dbConfig;
 var async = require('async');
 var _ = require('underscore');
 
-var createConnection = function createConnection() {
-    connection = mysql.createConnection(db_config);
+function createConnection() {
+  connection = mysql.createConnection(db_config);
 
-    connection.connect(function (err) {
-        if (err) {
-          console.error('error connecting: ' + err.stack);
-        }
-    });
+  connection.connect(function (err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+    }
+  });
 
-    connection.on('error',function(err){
-        console.error(err);
-        createConnection();
-    });
+  connection.on('error',function(err){
+    console.error(err);
+    createConnection();
+  });
 };
 
 createConnection();

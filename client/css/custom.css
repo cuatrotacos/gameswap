@@ -181,14 +181,16 @@ Offers
 */
 
 .offered-game {
-	height: 410px;
+	/*height: 410px;*/
 	width: 350px;
 	background-color: #7CB3E4;
 	border-radius: 5px;
 	padding: 10px;
 	display: inline-block;
 	float: none;
-	margin: 0 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 0;
 }
 .offered-game:first-child {
 	margin-left: 0;
