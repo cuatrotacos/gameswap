@@ -3,6 +3,8 @@ angular.module('userprofile', [])
 
     var userInfo = this;
 
+    $scope.isCollapsed = true;
+
     this.gamesOffered = [];
     this.gamesSeeking = [];
     this.updateClicked = false;

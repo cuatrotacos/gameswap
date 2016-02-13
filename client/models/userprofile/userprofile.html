@@ -42,6 +42,7 @@
     <div class="form-group" ng-class="{ 'has-error' : offerForm.title.$invalid && !offerForm.title.$pristine }">
       Add a new title:
       <div class='row'>
+
         <div class='col-md-8 nopadding-right'>
           <input type="text" name="title" class="form-control" ng-model="profile.gameToOffer.title" required />
         </div>
@@ -54,22 +55,33 @@
           </select>
           <p ng-show="profile.noOffPlatform" class='text-danger'>Please choose a platform.</p>
         </div>
-        <div>
-        <div class='col-md-1 nopadding-left'>
-          <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Search</button>
-        </div>
 
-        <div class="container-fluid">
+        <div>
+
+          <div class='col-md-1 nopadding-left'>
+            <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
+          </div>
+
           <div class="text-center" ng-if="gamesNotFound">
             <p class="text-center">NO GAMES FOUND</p>
           </div>
-          <div ng-repeat="game in gbgames" class="col-lg-3 thumb" ng-click="profile.addOffer(game)">
-            <div class="text-center">
-              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
-                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
-            </div>
+
+          <div class="row event-slider">
+            <uib-carousel class="col-sm-12">
+              <uib-slide class="col-sm-12" ng-repeat="game in gbgames" active="slide.active" ng-animate="true">
+                <div class="event-inner">
+                  <img ng-src="{{game.image.thumb_url}}" style="margin:auto;">
+                </div>
+                  <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
+                  <hr>
+                  <div uib-collapse="isCollapsed">
+                    <button type="button" class="btn btn-default" ng-click="profile.addOffer(game)">Offer this game</button>
+                    <div class="well well-lg">{{game.deck}}</div>
+                  </div>
+                </div>
+              </slide>
+            </carousel>
           </div>
-        </div>
 
         </div>
       </div>
