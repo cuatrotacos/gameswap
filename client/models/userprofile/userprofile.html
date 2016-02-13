@@ -58,8 +58,8 @@
 
         <div>
 
-          <div class='col-md-1 nopadding-left'>
-            <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
+          <div class='col-md-1 nopadding-left' style="padding-bottom:15px;">
+            <button type="submit" class="btn btn-primary padding-botton" ng-disabled="offerForm.$invalid">Add</button>
           </div>
 
           <div class="text-center" ng-if="loadingOffer">
@@ -70,47 +70,39 @@
             <p class="text-center">NO GAMES FOUND</p>
           </div>
 
-        <div class="container-fluid">
-          <div ng-repeat="game in getGBGamesOffer" class="col-lg-3 thumb" ng-click="profile.addOffer(game)">
-            <div class="text-center">
-              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
-                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
-            </div>
-          </div>
-        </div>
-
-         <!--  <div class="row event-slider">
-            <uib-carousel class="col-sm-12">
+          <div class="row event-slider" style="padding-top:15px;">
+            <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
               <uib-slide class="col-sm-12" ng-repeat="game in gbgames" active="slide.active" ng-animate="true">
                 <div class="event-inner">
-                  <img ng-src="{{game.image.thumb_url}}" style="margin:auto;">
-                </div>
-                  <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
-                  <hr>
-                  <div uib-collapse="isCollapsed">
-                    <button type="button" class="btn btn-default" ng-click="profile.addOffer(game)">Offer this game</button>
-                    <div class="well well-lg">{{game.deck}}</div>
+                  <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
+                  <div style="padding-top:5px;">
+                    <button type="button" style="margin-top:30px; margin-bottom: 10px; ceneter" class="btn btn-primary btn-lg btn-block" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
+                    <p>Click here to offer this game</p>
                   </div>
                 </div>
+                <div uib-collapse="isCollapsed" style="padding-bottom:15px;">
+                  <div class="well well-lg">{{game.deck}}</div>
+                  <button type="button" class="btn btn-default" ng-click="profile.addOffer(game)">Offer this game</button>
+                </div>
+                <hr>
+              <!-- </div> -->
               </slide>
             </carousel>
-          </div> -->
+          </div>
 
         </div>
       </div>
     </div>
   </form>
 
-<h3 class='head-space-md'>Games you are currently seeking: </h3>
+  <h3 class='head-space-md line-break'>Games you are currently seeking: </h3>
 
-  <div class='head-space-sm'>
     <table class='table borderless whitesmoke margin-bottom-ten' ng-repeat='game in profile.gamesSeeking'>
       <tr>
         <td class='col-md-1'><b>Title:</b></td> <td class='col-md-2'>{{ game.title }}</td>
         <td class='col-md-1'><b>Platform:</b></td> <td class='col-md-2'>{{ game.platform }}</td>
       </tr>
     </table>
-  </div>
 
   <form class='foot-space-sm' name="seekForm" ng-submit="profile.getGBGamesSeek(profile.gameToSeek); profile.gameToSeek.title = ''; profile.gameToSeek.platform = ''" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : seekForm.title.$invalid && !seekForm.title.$pristine }">
