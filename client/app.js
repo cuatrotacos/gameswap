@@ -8,6 +8,7 @@ angular
   	'auth.signup',
   	'auth.service',
   	'ui.router',
+    'ui.bootstrap',
     'messages.controller',
     'messages.service',
     'navbar.controller',
