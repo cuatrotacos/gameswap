@@ -62,9 +62,9 @@
             <button type="submit" class="btn btn-primary padding-botton" ng-disabled="offerForm.$invalid">Add</button>
           </div>
 
-          <div class="text-center" ng-if="loadingOffer">
+<!--           <div class="text-center" ng-if="loadingOffer">
             <img src="../assets/loading.gif">
-          </div>
+          </div> -->
 
           <div class="text-center" ng-if="gamesNotFoundOffer">
             <p class="text-center">NO GAMES FOUND</p>
@@ -72,8 +72,9 @@
 
           <div class="row event-slider" style="padding-top:15px;">
             <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
-              <uib-slide class="col-sm-12" ng-repeat="game in gbgames" active="slide.active" ng-animate="true">
-                  <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
+              <uib-slide class="col-sm-12" ng-repeat="game in getGBGamesOffer" active="slide.active" ng-animate="true">
+                
+                <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
                 <div class="event-inner">
                   <div style="padding-top:5px;">
                     <button type="button" style="margin-top:30px; margin-bottom: 10px; ceneter" class="btn btn-primary btn-lg btn-block" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
@@ -82,7 +83,6 @@
                 </div>
                 <div uib-collapse="isCollapsed" style="padding-bottom:15px;">
                   <div class="well well-lg">{{game.deck}}</div>
-
                   <button type="button" class="btn btn-success" ng-click="profile.addOffer(game)">Offer this game</button>
                 </div>
                 <hr>
@@ -125,23 +125,33 @@
           <button type="submit" class="btn btn-primary" ng-disabled="seekForm.$invalid">Search Games</button>
         </div>
 
-        <div class="text-center" ng-if="loadingSeek">
+<!--         <div class="text-center" ng-if="loadingSeek">
             <img src="../assets/loading.gif">
-          </div>
+          </div> -->
 
         <div class="text-center" ng-if="gamesNotFoundSeek">
             <p class="text-center">NO GAMES FOUND</p>
           </div>
 
-        <div class="container-fluid">
-          <div ng-repeat="game in getGBGamesSeek" class="col-lg-3 thumb" ng-click="profile.addSeek(game)">
-            <div class="text-center">
-              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
-                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
-            </div>
+          <div class="row event-slider" style="padding-top:15px;">
+            <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
+              <uib-slide class="col-sm-12" ng-repeat="game in getGBGamesSeek" active="slide.active" ng-animate="true">
+                
+                <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
+                <div class="event-inner">
+                  <div style="padding-top:5px;">
+                    <button type="button" style="margin-top:30px; margin-bottom: 10px; ceneter" class="btn btn-primary btn-lg btn-block" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
+                    <p>Click here to get this game</p>
+                  </div>
+                </div>
+                <div uib-collapse="isCollapsed" style="padding-bottom:15px;">
+                  <div class="well well-lg">{{game.deck}}</div>
+                  <button type="button" class="btn btn-success" ng-click="profile.addSeek(game)">Get this game</button>
+                </div>
+                <hr>
+              </slide>
+            </carousel>
           </div>
-        </div>
-      </div>
 
     </div>
   </form>
