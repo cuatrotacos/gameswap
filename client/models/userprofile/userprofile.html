@@ -73,8 +73,8 @@
           <div class="row event-slider" style="padding-top:15px;">
             <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
               <uib-slide class="col-sm-12" ng-repeat="game in gbgames" active="slide.active" ng-animate="true">
-                <div class="event-inner">
                   <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
+                <div class="event-inner">
                   <div style="padding-top:5px;">
                     <button type="button" style="margin-top:30px; margin-bottom: 10px; ceneter" class="btn btn-primary btn-lg btn-block" ng-click="isCollapsed = !isCollapsed">{{game.name}}</button>
                     <p>Click here to offer this game</p>
@@ -82,10 +82,10 @@
                 </div>
                 <div uib-collapse="isCollapsed" style="padding-bottom:15px;">
                   <div class="well well-lg">{{game.deck}}</div>
-                  <button type="button" class="btn btn-default" ng-click="profile.addOffer(game)">Offer this game</button>
+
+                  <button type="button" class="btn btn-success" ng-click="profile.addOffer(game)">Offer this game</button>
                 </div>
                 <hr>
-              <!-- </div> -->
               </slide>
             </carousel>
           </div>
