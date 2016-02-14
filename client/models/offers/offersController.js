@@ -23,7 +23,6 @@ angular.module('offers.controller', [])
   }
 
   this.userSeeking = function(user) {
-    this.viewSeeking = true;
     this.selectedUser = user;
     console.log("Looking at seekings from", user);
     OffersServices.getSeekingByUser(user.id)

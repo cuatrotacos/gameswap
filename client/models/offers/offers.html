@@ -1,6 +1,6 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
-    <p class="text-center">This will contain a carousel of games people want to trade</p>
+    <p class="text-center">Games Available for Swapping!</p>
     <div class="row game-container">
       <div ng-repeat="game in offers.offers"
           ng-click="offers.selectGame(game)"
@@ -16,8 +16,7 @@
   <div ng-if="offers.selectedGame.id">
     <div class="row">
 
-      <div
-      ng-class="{'col-md-6': !offers.viewSeeking, 'col-md-4': offers.viewSeeking}">
+      <div class="col-md-4">
         <div class="offered-game">
           <div class="center">
             <img ng-src="{{offers.selectedGame.thumbnail}}" class="center boxart"/>
@@ -26,9 +25,8 @@
         </div>
       </div>
 
-      <div
-      ng-class="{'col-md-6': !offers.viewSeeking, 'col-md-4': offers.viewSeeking}">
-        <p> Users Offering {{offers.selectedGame.title}}</p>
+      <div class="col-md-4">
+        <p> All Users Offering {{offers.selectedGame.title}}</p>
         <table class="table borderless whitesmoke margin-bottom-ten">
           <tbody>
             <tr
@@ -41,10 +39,17 @@
       </div>
 
       <div
-      class="col-md-4 bg-info"
-      ng-if="offers.viewSeeking">
-        This is a list of games they want to trade for.
+      class="col-md-4"
+      ng-if="offers.selectedUser.id">
+        <p> {{offers.selectedUser.username}} Wants These Games </p>
       </div>
+
+      <div
+      class="col-md-4"
+      ng-if="!offers.selectedUser.id">
+        <p>Swap for any of these Games</p>
+      </div>
+
     </div>
 
     <div class="line-break">

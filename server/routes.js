@@ -249,7 +249,7 @@ router.get('/allOfferingsByGame', auth.checkUser, function(req, res, next) {
   db.allOfferingsByGame(gameid, function(data){
     res.json({users: data})
   })
-})
+});
 
 router.get('/allSeekingByUser', auth.checkUser, function(req, res, next) {
   var userid = req.query.userid;
@@ -257,7 +257,10 @@ router.get('/allSeekingByUser', auth.checkUser, function(req, res, next) {
   db.allSeekingByUser(userid, function(data){
     res.json({games: data})
   })
-})
+});
+
+//do all willing to swap route
+
 
 
 module.exports = router;

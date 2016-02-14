@@ -70,7 +70,7 @@ module.exports = {
     var checkValues = gbid;
     var insert = 'INSERT IGNORE into Games (title, platform, rating, description, thumbnail, gbid) values(?, ?, ?, ?, ?, ?);';
     var insertValues = [title, platform, rating, description, thumbnail, gbid];
-
+    //first check if game has already been added. If so, return it.
     connection.query(check, checkValues, function(err, data) {
       if (err) {
         console.error('error 1 in db addGame: ', err);
@@ -214,6 +214,17 @@ module.exports = {
 
     connection.query(sql, values, function(err, data) {
       if (err) console.log('errror in db allOfferingsByGame: ', err);
+      callback(data);
+    });
+  },
+
+  //returns all games that users are seeking in exchange for a particular game
+  allWillingToSwap: function(gameid, callback) {
+    var sql = "SELECT Games.*, Users.username FROM Games LEFT JOIN Seeking ON (Seeking.gameid = Games.id) INNER JOIN Users ON (Users.id = Seeking.userid) LEFT JOIN Offering ON (Seeking.userid = Offering.userid) WHERE Offering.gameid = ?;";
+    var values = gameid;
+
+    connection.query(sql, values, function(err, data) {
+      if (err) console.log('errror in db allWillingToSwap: ', err);
       callback(data);
     });
   }

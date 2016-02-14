@@ -16,8 +16,8 @@ angular.module('offers.services', [])
   var getSeekingByUser = function(userid) {
     var q = $q.defer();
     $http.get($rootScope.url + "/allSeekingByUser?userid=" + userid)
-    .then(function(offers){
-      q.resolve(seekings);
+    .then(function(wants){
+      q.resolve(wants);
     }, function(err){
       q.resolve(err);
     })
@@ -25,6 +25,7 @@ angular.module('offers.services', [])
   }
 
   return {
-    getOffers: getOffers
+    getOffers: getOffers,
+    getSeekingByUser: getSeekingByUser
   }
 })
