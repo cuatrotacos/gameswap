@@ -38,7 +38,7 @@
   </table>
 
 
-  <form class='foot-space-sm' name="offerForm" ng-submit="profile.getGBGames(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
+  <form class='foot-space-sm' name="offerForm" ng-submit="profile.getGBGamesOffer(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : offerForm.title.$invalid && !offerForm.title.$pristine }">
       Add a new title:
       <div class='row'>
@@ -62,11 +62,24 @@
             <button type="submit" class="btn btn-primary" ng-disabled="offerForm.$invalid">Add</button>
           </div>
 
-          <div class="text-center" ng-if="gamesNotFound">
+          <div class="text-center" ng-if="loadingOffer">
+            <img src="../assets/loading.gif">
+          </div>
+
+          <div class="text-center" ng-if="gamesNotFoundOffer">
             <p class="text-center">NO GAMES FOUND</p>
           </div>
 
-          <div class="row event-slider">
+        <div class="container-fluid">
+          <div ng-repeat="game in getGBGamesOffer" class="col-lg-3 thumb" ng-click="profile.addOffer(game)">
+            <div class="text-center">
+              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
+                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
+            </div>
+          </div>
+        </div>
+
+         <!--  <div class="row event-slider">
             <uib-carousel class="col-sm-12">
               <uib-slide class="col-sm-12" ng-repeat="game in gbgames" active="slide.active" ng-animate="true">
                 <div class="event-inner">
@@ -81,14 +94,14 @@
                 </div>
               </slide>
             </carousel>
-          </div>
+          </div> -->
 
         </div>
       </div>
     </div>
   </form>
 
-  <h3 class='head-space-md'>Games you are currently seeking: </h3>
+<h3 class='head-space-md'>Games you are currently seeking: </h3>
 
   <div class='head-space-sm'>
     <table class='table borderless whitesmoke margin-bottom-ten' ng-repeat='game in profile.gamesSeeking'>
@@ -99,10 +112,11 @@
     </table>
   </div>
 
-  <form class='foot-space-sm' name="seekForm" ng-submit="profile.addSeek(profile.gameToSeek); profile.gameToSeek.title = ''; profile.gameToSeek.platform = ''" novalidate>
+  <form class='foot-space-sm' name="seekForm" ng-submit="profile.getGBGamesSeek(profile.gameToSeek); profile.gameToSeek.title = ''; profile.gameToSeek.platform = ''" novalidate>
     <div class="form-group" ng-class="{ 'has-error' : seekForm.title.$invalid && !seekForm.title.$pristine }">
       Add a new title:
       <div class='row'>
+
         <div class='col-md-8 nopadding-right'>
           <input type="text" name="title" class="form-control" ng-model="profile.gameToSeek.title" required />
         </div>
@@ -116,9 +130,27 @@
           <p ng-show="profile.noSeekPlatform" class='text-danger'>Please choose a platform.</p>
         </div>
         <div class='col-md-1 nopadding-left'>
-          <button type="submit" class="btn btn-primary" ng-disabled="seekForm.$invalid">Add</button>
+          <button type="submit" class="btn btn-primary" ng-disabled="seekForm.$invalid">Search Games</button>
+        </div>
+
+        <div class="text-center" ng-if="loadingSeek">
+            <img src="../assets/loading.gif">
+          </div>
+
+        <div class="text-center" ng-if="gamesNotFoundSeek">
+            <p class="text-center">NO GAMES FOUND</p>
+          </div>
+
+        <div class="container-fluid">
+          <div ng-repeat="game in getGBGamesSeek" class="col-lg-3 thumb" ng-click="profile.addSeek(game)">
+            <div class="text-center">
+              <img ng-src="{{game.image.thumb_url}}" class="img-thumbnail">
+                <p class="text-center" style="max-height: 25px">{{game.name}}</p>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </form>
   <div class='col-md-8 col-md-offset-2' ng-show='profile.gamesOffered.length && profile.gamesSeeking.length'>
