@@ -62,9 +62,9 @@
             <button type="submit" class="btn btn-primary padding-botton" ng-disabled="offerForm.$invalid">Add</button>
           </div>
 
-<!--           <div class="text-center" ng-if="loadingOffer">
+          <div class="text-center" ng-if="loadingOffer">
             <img src="../assets/loading.gif">
-          </div> -->
+          </div>
 
           <div class="text-center" ng-if="gamesNotFoundOffer">
             <p class="text-center">NO GAMES FOUND</p>
@@ -73,7 +73,7 @@
           <div class="row event-slider" style="padding-top:15px;">
             <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
               <uib-slide class="col-sm-12" ng-repeat="game in getGBGamesOffer" active="slide.active" ng-animate="true">
-                
+
                 <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
                 <div class="event-inner">
                   <div style="padding-top:5px;">
@@ -125,9 +125,9 @@
           <button type="submit" class="btn btn-primary" ng-disabled="seekForm.$invalid">Search Games</button>
         </div>
 
-<!--         <div class="text-center" ng-if="loadingSeek">
+        <div class="text-center" ng-if="loadingSeek">
             <img src="../assets/loading.gif">
-          </div> -->
+          </div>
 
         <div class="text-center" ng-if="gamesNotFoundSeek">
             <p class="text-center">NO GAMES FOUND</p>
@@ -136,7 +136,7 @@
           <div class="row event-slider" style="padding-top:15px;">
             <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
               <uib-slide class="col-sm-12" ng-repeat="game in getGBGamesSeek" active="slide.active" ng-animate="true">
-                
+
                 <img ng-src="{{game.image.small_url}}" style="margin:auto;" class="img-thumbnail">
                 <div class="event-inner">
                   <div style="padding-top:5px;">

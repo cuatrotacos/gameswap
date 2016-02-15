@@ -74,55 +74,51 @@ module.exports = {
     connection.query(check, checkValues, function(err, data) {
       if (err) {
         console.error('error 1 in db addGame: ', err);
+        callback(false);
       }
 
       if (data.length === 0) {
-        connection.query(insert, insertValues, function(err) {
-          if (err) console.error('error 2 in db addGame: ', err);
-          else callback(true);
+        connection.query(insert, insertValues, function(err, insertedData) {
+          if (err)  {
+            console.error('error 2 in db addGame: ', err);
+            callback(false);
+          } else {
+            console.log("+++ 86 database.js FIRST TIME INSERT INTO DB's BUTT")
+            callback(true);
+          }
         });
       } else {
-        callback(false);
+        console.log("+++ 91 database.js ALREADY IN DB BUTT")
+        callback(true);
       }
     });
   },
 
-  addOffering: function (userid, title, platform, condition, gbid) {
-    var check = 'SELECT * FROM Games WHERE gbid = ?;'
-    var checkValues = gbid;
+  addOffering: function (userid, title, platform, condition, gbid, callback) {
     var insert = 'INSERT into Offering (userid, game_condition, gameid) values(?, ?, ?);';
-    var insertValues = [userid, condition];
+    var insertValues = [userid, condition, gbid];
 
-    connection.query(check, checkValues, function (err, data) {
+    connection.query(insert, insertValues, function(err, data) {
       if (err) {
-        console.error('error 1 in db addOffering: ', err);
+        console.error('error 2 in db addOffering: ', err);
+        callback(false); //send back 406
+      } else {
+        callback(true); //send back 201
       }
-      insertValues.push(data[0].id);
-      connection.query(insert, insertValues, function(err, data) {
-        if (err) {
-          console.error('error 2 in db addOffering: ', err);
-        }
-      });
     });
   },
 
-  addSeeking: function (userid, title, platform) {
-    var check = 'SELECT id FROM Games WHERE title = ? AND platform = ?;';
-    var checkValues = [title, platform];
+  addSeeking: function (userid, title, platform, gbid, callback) {
     var insert = 'INSERT into Seeking (userid, gameid) values( ?, ?);';
-    var insertValues = [userid];
+    var insertValues = [userid, gbid];
 
-    connection.query(check, checkValues, function (err, data) {
+    connection.query(insert, insertValues, function(err, data) {
       if (err) {
-        console.error('error 1 in db addSeeking: ', err);
+        console.error('error 2 in db addSeeking: ', err);
+        callback(false); //send back 406
+      } else {
+        callback(true); //send back 201
       }
-
-      insertValues.push(data[0].id);
-      connection.query(insert, insertValues, function(err, data) {
-        if (err) {
-          console.error('error 2 in db addSeeking: ', err);
-        }
-      });
     });
   },
 

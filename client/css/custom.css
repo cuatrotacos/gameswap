@@ -26,7 +26,7 @@ img {
 
 .main-poster {
 	position: relative;
-	background: black url("../assets/images/jumbotron.jpg") center center;
+	background: black url("../assets/jumbotron.jpg") center center;
 	width: 100%;
 	height: 100%;
 	background-size: cover;
