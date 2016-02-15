@@ -12,6 +12,7 @@ angular.module('offers.controller', [])
   this.isAuth = AuthServices.isAuth();
   this.viewSeeking = false;
   this.selectedUser = {};
+  this.userWants= {};
 
   this.selectGame = function(game) {
     if (this.selectedGame === game) {
@@ -27,9 +28,9 @@ angular.module('offers.controller', [])
     console.log("Looking at seekings from", user);
     OffersServices.getSeekingByUser(user.id)
     .then(function(wants){
-      console.log("++28 offersCtrl user wants", wants);
-      this.userWants = wants;
-    })
+      this.userWants = wants.data.games;
+      console.log("++28 offersCtrl userWants", this);
+    }.bind(this))
     //set scope variable that changes the dimensions of the page
     //Get the games that this user is seeking
     //Select the games that you are offering that match what that user is looking for

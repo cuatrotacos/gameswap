@@ -14,6 +14,7 @@
     </div>
   </div>
   <div ng-if="offers.selectedGame.id">
+
     <div class="row">
 
       <div class="col-md-4">
@@ -41,14 +42,22 @@
       <div
       class="col-md-4"
       ng-if="offers.selectedUser.id">
-        <p> {{offers.selectedUser.username}} Wants These Games </p>
+        <p> {{offers.selectedUser.username}} would trade for these Games </p>
+        <div class="container-fluid">
+          <div ng-repeat="game in offers.userWants" class="col-lg-3 thumb">
+            <div class="text-center">
+              <img ng-src="{{game.thumbnail}}" class="img-thumbnail">
+                <p class="text-center" style="max-height: 25px">{{game.title}}</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div
+      <!-- <div
       class="col-md-4"
       ng-if="!offers.selectedUser.id">
         <p>Swap for any of these Games</p>
-      </div>
+      </div> -->
 
     </div>
 
