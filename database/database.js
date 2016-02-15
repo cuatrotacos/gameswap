@@ -185,7 +185,7 @@ module.exports = {
   },
 
   allOfferings: function(callback) {
-    var sql = "SELECT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
+    var sql = "SELECT DISTINCT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
     connection.query(sql, function(err, games) {
       if (err) console.log('errror in db allOfferingsByGame: ', err);
       async.map(games, function(game, callback){
@@ -214,7 +214,7 @@ module.exports = {
 
   //returns all games that users are seeking in exchange for a particular game
   allWillingToSwap: function(gameid, callback) {
-    var sql = "SELECT Games.*, Users.username FROM Games LEFT JOIN Seeking ON (Seeking.gameid = Games.id) INNER JOIN Users ON (Users.id = Seeking.userid) LEFT JOIN Offering ON (Seeking.userid = Offering.userid) WHERE Offering.gameid = ?;";
+    var sql = "SELECT Games.*, Users.username, Users.id as userid FROM Games LEFT JOIN Seeking ON (Seeking.gameid = Games.id) INNER JOIN Users ON (Users.id = Seeking.userid) LEFT JOIN Offering ON (Seeking.userid = Offering.userid) WHERE Offering.gameid = ?;";
     var values = gameid;
 
     connection.query(sql, values, function(err, data) {

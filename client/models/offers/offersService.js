@@ -13,9 +13,9 @@ angular.module('offers.services', [])
     return q.promise;
   }
 
-  var getSeekingByUser = function(userid) {
+  var allWillingToSwap = function(gameid) {
     var q = $q.defer();
-    $http.get($rootScope.url + "/allSeekingByUser?userid=" + userid)
+    $http.get($rootScope.url + "/allWillingToSwap?gameid=" + gameid)
     .then(function(wants){
       q.resolve(wants);
     }, function(err){
@@ -24,8 +24,20 @@ angular.module('offers.services', [])
     return q.promise;
   }
 
+  // var getSeekingByUser = function(userid) {
+  //   var q = $q.defer();
+  //   $http.get($rootScope.url + "/allSeekingByUser?userid=" + userid)
+  //   .then(function(wants){
+  //     q.resolve(wants);
+  //   }, function(err){
+  //     q.resolve(err);
+  //   })
+  //   return q.promise;
+  // }
+
   return {
     getOffers: getOffers,
-    getSeekingByUser: getSeekingByUser
+    // getSeekingByUser: getSeekingByUser,
+    allWillingToSwap: allWillingToSwap
   }
 })

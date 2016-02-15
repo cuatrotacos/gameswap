@@ -253,7 +253,7 @@ router.post('/addmessage', auth.checkUser, function(req, res, next) {
   res.sendStatus(201);
 });
 
-router.get('/allOfferings', auth.checkUser, function(req, res, next) {
+router.get('/allOfferings', function(req, res, next) {
   console.log("getting all game offerings");
   db.allOfferings(function(data){
     res.json({offerings: data})
@@ -276,7 +276,13 @@ router.get('/allSeekingByUser', auth.checkUser, function(req, res, next) {
   })
 });
 
-//do all willing to swap route
+router.get('/allWillingToSwap', function(req, res, next) {
+  var gameid = req.query.gameid;
+  console.log("getting all possible trades for game #"+ gameid);
+  db.allWillingToSwap(gameid, function(data){
+    res.json({games: data})
+  })
+});
 
 
 

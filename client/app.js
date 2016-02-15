@@ -15,7 +15,8 @@ angular
     'navbar.services',
     'offers.controller',
     'offers.services',
-    'keys.factory'
+    'keys.factory',
+    'underscore'
     ])
 
   .config(function($stateProvider, $urlRouterProvider, $httpProvider){
