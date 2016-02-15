@@ -160,7 +160,6 @@ router.put('/profile/update', auth.checkUser, function(req, res, next) {
   @return 201
 */
 router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
-  console.log("+++ 163 routes.js req.body.game: ", req.body.game)
   var title = req.body.game.name;
   var platform = req.body.game.userPlatform;
   var condition = 'default condition';
@@ -169,9 +168,9 @@ router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
   var rating = 5;
   var gbid = req.body.game.id;
 
-  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
+  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success, gameId) {
     if (success) {
-      db.addOffering(req.user.id, title, platform, condition, gbid, function (success) {
+      db.addOffering(req.user.id, title, platform, condition, gameId, function (success) {
         if (success) {
           res.sendStatus(201);
         } else {
@@ -206,13 +205,10 @@ router.post('/addtoseeking', auth.checkUser, function(req, res, next) {
   var rating = 5;
   var gbid = req.body.game.id;
 
-  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
-    console.log("+++ 209 routes.js success: ", success)
+  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success, gameId) {
     if (success) {
-      db.addSeeking(req.user.id, title, platform, gbid, function (success) {
-        console.log("+++ 212 routes.js inner success: ", success)
+      db.addSeeking(req.user.id, title, platform, gameId, function (success) {
         if (success) {
-          console.log("+++ 214 routes.js REJOICE!")
           res.sendStatus(201);
         } else {
           res.sendStatus(406);
