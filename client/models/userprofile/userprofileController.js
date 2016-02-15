@@ -102,12 +102,7 @@ angular.module('userprofile', [])
     }
 
     this.addSeek = function(game) {
-      $scope.getGBGamesSeek = null;
-      $scope.loadingSeek = true;
-      ProfileServices.addGameSeeking({
-          title: game.title,
-          platform: game.platform
-        })
+      ProfileServices.addGameSeeking(game)
       .then(function(resp) {
         $scope.loadingSeek = false;
         // setTimeout(loadProfile, 200);

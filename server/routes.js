@@ -160,7 +160,7 @@ router.put('/profile/update', auth.checkUser, function(req, res, next) {
   @return 201
 */
 router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
-  console.log('req.body.game', req.body.game);
+  console.log("+++ 163 routes.js req.body.game: ", req.body.game)
   var title = req.body.game.name;
   var platform = req.body.game.userPlatform;
   var condition = 'default condition';
@@ -170,8 +170,17 @@ router.post('/addtoofferings', auth.checkUser, function(req, res, next) {
   var gbid = req.body.game.id;
 
   db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
-    db.addOffering(req.user.id, title, platform, condition, gbid);
-    res.sendStatus(201);
+    if (success) {
+      db.addOffering(req.user.id, title, platform, condition, gbid, function (success) {
+        if (success) {
+          res.sendStatus(201);
+        } else {
+          res.sendStatus(406);
+        }
+      });
+    } else {
+      res.sendStatus(406); //not accepted
+    }
   });
 });
 
@@ -190,17 +199,29 @@ router.post('/searchofferings', function(req, res, next) {
 
 });
 router.post('/addtoseeking', auth.checkUser, function(req, res, next) {
-  var title = req.body.game.title;
-  var platform = req.body.game.platform;
+  var title = req.body.game.name;
+  var platform = req.body.game.userPlatform;
   var description = 'default description';
-  var thumbnail = req.body.game.thumbnail;
+  var thumbnail = req.body.game.image.thumb_url;
   var rating = 5;
+  var gbid = req.body.game.id;
 
-  db.addGame(title, platform, rating, description, thumbnail, function(success) {
-    db.addSeeking(req.user.id, title, platform);
-    res.sendStatus(201);
+  db.addGame(title, platform, rating, description, thumbnail, gbid, function(success) {
+    console.log("+++ 209 routes.js success: ", success)
+    if (success) {
+      db.addSeeking(req.user.id, title, platform, gbid, function (success) {
+        console.log("+++ 212 routes.js inner success: ", success)
+        if (success) {
+          console.log("+++ 214 routes.js REJOICE!")
+          res.sendStatus(201);
+        } else {
+          res.sendStatus(406);
+        }
+      });
+    } else {
+      res.sendStatus(406); //not accepted
+    }
   });
-
 });
 
 router.post('/searchseeking', auth.checkUser, function(req, res, next) {
