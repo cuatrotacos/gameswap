@@ -83,13 +83,11 @@ module.exports = {
             console.error('error 2 in db addGame: ', err);
             callback(false);
           } else {
-            console.log("+++ 86 database.js FIRST TIME INSERT INTO DB's BUTT")
-            callback(true);
+            callback(true, insertedData.insertId);
           }
         });
       } else {
-        console.log("+++ 91 database.js ALREADY IN DB BUTT")
-        callback(true);
+        callback(true, data[0].id);
       }
     });
   },
