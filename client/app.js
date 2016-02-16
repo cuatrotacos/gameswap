@@ -8,6 +8,7 @@ angular
   	'auth.signup',
   	'auth.service',
   	'ui.router',
+    'ngDraggable',
     'ui.bootstrap',
     'messages.controller',
     'messages.service',
