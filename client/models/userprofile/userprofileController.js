@@ -14,6 +14,9 @@ angular.module('userprofile', [])
     $scope.loadingOffer = false;
     $scope.loadingSeek = false;
     $scope.gamesNotFoundSeek = false;
+    $scope.droppedGamedWanted = [];
+    $scope.droppedGamedOffered = [];
+    $scope.centerAnchor = true;
 
     var loadProfile = function() {
       ProfileServices.getProfileData()
@@ -102,8 +105,6 @@ angular.module('userprofile', [])
     }
 
     this.addSeek = function(game) {
-      $scope.getGBGamesSeek = null;
-      $scope.loadingSeek = true;
       ProfileServices.addGameSeeking({
           title: game.title,
           platform: game.platform
@@ -129,6 +130,43 @@ angular.module('userprofile', [])
   	this.signOut = function(){
   		AuthServices.signOut();
   	}
+
+    $scope.onDroppedGamedWanted = function(data, evt){
+      var index = $scope.droppedGamedWanted.indexOf(data);
+      if (index == -1){
+        $scope.droppedGamedWanted.unshift(data);
+      }
+      console.log($scope.droppedGamedWanted, "games Wanted")
+    }
+
+    $scope.onDroppedGamedOffered = function(data, evt){
+      var index = $scope.droppedGamedOffered.indexOf(data);
+      if (index == -1) {
+        $scope.droppedGamedOffered.unshift(data);
+      }
+      console.log($scope.droppedGamedOffered, "games offered")
+
+    }
+    $scope.onDragSuccess1=function(data,evt){
+      var index = $scope.droppedGamedWanted.indexOf(data);
+      if (index > -1) {
+          $scope.droppedGamedWanted.splice(index, 1);
+          $scope.addSeek(data);
+      }
+      console.log($scope.droppedGamedWanted, "games Wanted")
+    }
+
+    $scope.onDragSuccess2=function(data,evt){
+      var index = $scope.droppedGamedOffered.indexOf(data);
+      if (index > -1) {
+          $scope.droppedGamedOffered.splice(index, 1);
+      }
+      console.log($scope.droppedGamedOffered, "games offered")
+    }
+
+    $scope.toggleCenterAnchor = function () {
+      $scope.centerAnchor = !$scope.centerAnchor
+    }
 
     loadProfile();
 

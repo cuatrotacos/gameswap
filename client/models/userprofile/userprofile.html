@@ -1,76 +1,114 @@
-<div class='container-fluid col-md-offset-3 col-md-6' ng-controller='ProfileController as profile'>
-  <h3 class='head-space-md'>Your profile</h3>
+<div class='container-fluid' ng-controller='ProfileController as profile'>
 
-  <table class='table message-border table-condensed'>
-    <tr>
-      <td class='table-tag'>Username:</td>
-      <td>{{ profile.username }}</td>
-    </tr>
-    <tr>
-      <td class='table-tag'>Email:</td>
-      <td>{{ profile.email }}</td>
-    </tr>
-    <tr>
-      <td class='table-tag'>City:</td>
-      <td ng-show='profile.city'> {{ profile.city }} </td>
-    </tr>
-  </table>
+ <!-- Search for games -->
 
-  <div class='foot-space-sm'>
-    <div ng-show='profile.updateClicked === false'>
-      <button ng-click='profile.toggleUpdate()' class='btn btn-default'>Edit City</button>
-    </div>
+  <div class="row">
+    <div class="container-fluid" style="background: #f5f5f5; margin: 15px">
 
-    <form ng-show='profile.updateClicked === true'>
-      <input class='form-control' type='text' ng-model='profile.address.city' placeholder="City" />
-      <br>
-      <button class='btn btn-default' ng-click='profile.submitUpdate(profile.address)'>Submit Edits</button>
+
+    <form class='foot-space-sm' name="offerForm" ng-submit="profile.getGBGamesOffer(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
+      <div class="form-group" ng-class="{ 'has-error' : offerForm.title.$invalid && !offerForm.title.$pristine }">
+        <div class='row' style="padding: 45px">
+          <div class='col-md-6'>
+          <h1 style="text-center">Search Games</h1>
+          <p>Enter the name of the game you are looking for and drag it to the corresponding box.</p>
+            <input type="text" name="title" class="form-control" ng-model="profile.gameToOffer.title" required />
+          <div class='col-md-6' style="padding: 10px">
+            <select class="selectpicker btn btn-default form-control" role='button' ng-model='profile.gameToOffer.platform'>
+              <option value="">Platform</option>
+              <option value="PlayStation 4">PlayStation 4</option>
+              <option value="Xbox One">Xbox One</option>
+            </select>
+            <p ng-show="profile.noOffPlatform" class='text-danger'>Please choose a platform.</p>
+          </div>
+          <div class='col-md-4' style="padding: 10px">
+          <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="offerForm.$invalid">Search</button>
+        </div>
+        </div>
+        </div>
+
+      </div>
+
+      <div>
+        <div class="text-center" ng-if="gamesNotFoundOffer">
+          <p class="text-center">NO GAMES FOUND</p>
+        </div>
+
+        <div class="container-fluid" style="margin: 10px; -webkit-overflow-scrolling: touch; overflow-y: auto; display: flex;">
+          <div class="col-md-2" ng-repeat="game in getGBGamesOffer">
+            <div ng-drag="true" ng-drag-data="game" data-allow-transform="true">
+              <img ng-src="{{game.image.thumb_url}}" class="thumbnail" alt="image not available">
+              <h5>{{game.name}}</h5>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </form>
   </div>
 
-  <h3 class='head-space-md line-break'>Games you are currently offering: </h3>
 
-  <table class='table borderless whitesmoke margin-bottom-ten' ng-repeat='game in profile.gamesOffered'>
-    <tr>
-      <td class='col-md-1'><b>Title:</b></td> <td class='col-md-2'>{{ game.title }}</td>
-      <td class='col-md-1'><b>Platform:</b></td> <td class='col-md-2'>{{ game.platform }}</td>
-    </tr>
-  </table>
+  <!-- Seek and want boxex -->
+  <div class-"row">
+    <div class="col-md-6">
+    <div class="drop-want-heading">Games I Want</div>
+      <div ng-drop="true" ng-drop-success="onDroppedGamedWanted($data,$event)" class="ng-drop">
 
-
-  <form class='foot-space-sm' name="offerForm" ng-submit="profile.getGBGamesOffer(profile.gameToOffer); profile.gameToOffer.title = ''; profile.gameToOffer.platform = ''" novalidate>
-    <div class="form-group" ng-class="{ 'has-error' : offerForm.title.$invalid && !offerForm.title.$pristine }">
-      Add a new title:
-      <div class='row'>
-
-        <div class='col-md-8 nopadding-right'>
-          <input type="text" name="title" class="form-control" ng-model="profile.gameToOffer.title" required />
-        </div>
-
-        <div class='col-md-3 nopadding'>
-          <select class="selectpicker btn btn-default form-control" role='button' ng-model='profile.gameToOffer.platform'>
-            <option value="">Platform</option>
-            <option value="PlayStation 4">PlayStation 4</option>
-            <option value="Xbox One">Xbox One</option>
-          </select>
-          <p ng-show="profile.noOffPlatform" class='text-danger'>Please choose a platform.</p>
-        </div>
-
-        <div>
-
-          <div class='col-md-1 nopadding-left' style="padding-bottom:15px;">
-            <button type="submit" class="btn btn-primary padding-botton" ng-disabled="offerForm.$invalid">Add</button>
+        <div ng-repeat="game in droppedGamedWanted" ng-drag="true" ng-drag-data="game" ng-drag-success="onDragSuccess1($data,$event)">
+          <div class="col-md-3" style="margin: 10px">
+            <img ng-src="{{game.image.thumb_url}}" class="thumbnail" alt="image not available">
+            <h5>{{game.name}}</h5>
           </div>
+        </div>
+      </div>
+    </div>
 
-<!--           <div class="text-center" ng-if="loadingOffer">
-            <img src="../assets/loading.gif">
-          </div> -->
+    <div class="col-md-6">
+      <div class="drop-offer-heading">Games I'm offering</div>
+      <div ng-drop="true" ng-drop-success="onDroppedGamedOffered($data,$event)" class="ng-drop">
 
-          <div class="text-center" ng-if="gamesNotFoundOffer">
-            <p class="text-center">NO GAMES FOUND</p>
+        <div ng-repeat="game in droppedGamedOffered" ng-drag="true" ng-drag-data="game" ng-drag-success="onDragSuccess2($data,$event)">
+          <div class="col-md-3" style="margin: 25px">
+            <img ng-src="{{game.image.thumb_url}}" class="thumbnail" alt="image not available">
+            <h6>{{game.name}}</h6>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="row event-slider" style="padding-top:15px;">
+  <div class="col-md-4" style="background: #f5f5f5; margin: 15px">
+    <h3 class='head-space-md'>Your profile</h3>
+
+    <table class='table message-border table-condensed'>
+      <tr>
+        <td class='table-tag'>Username:</td>
+        <td>{{ profile.username }}</td>
+      </tr>
+      <tr>
+        <td class='table-tag'>Email:</td>
+        <td>{{ profile.email }}</td>
+      </tr>
+      <tr>
+        <td class='table-tag'>City:</td>
+        <td ng-show='profile.city'> {{ profile.city }} </td>
+      </tr>
+    </table>
+
+    <div class='foot-space-sm'>
+      <div ng-show='profile.updateClicked === false'>
+        <button ng-click='profile.toggleUpdate()' class='btn btn-default'>Edit City</button>
+      </div>
+
+      <form ng-show='profile.updateClicked === true'>
+        <input class='form-control' type='text' ng-model='profile.address.city' placeholder="City" />
+        <br>
+        <button class='btn btn-default' ng-click='profile.submitUpdate(profile.address)'>Submit Edits</button>
+      </form>
+    </div>
+  </div>
+
+<!--           <div class="row event-slider" style="padding-top:15px;">
             <uib-carousel class="col-sm-12" style="padding-top:15px;" no-wrap="noWrapSlides">
               <uib-slide class="col-sm-12" ng-repeat="game in getGBGamesOffer" active="slide.active" ng-animate="true">
                 
@@ -88,14 +126,10 @@
                 <hr>
               </slide>
             </carousel>
-          </div>
+          </div> -->
 
-        </div>
-      </div>
-    </div>
-  </form>
 
-  <h3 class='head-space-md line-break'>Games you are currently seeking: </h3>
+<!--   <h3 class='head-space-md line-break'>Games you are currently seeking: </h3>
 
     <table class='table borderless whitesmoke margin-bottom-ten' ng-repeat='game in profile.gamesSeeking'>
       <tr>
@@ -129,7 +163,7 @@
             <img src="../assets/loading.gif">
           </div> -->
 
-        <div class="text-center" ng-if="gamesNotFoundSeek">
+<!--         <div class="text-center" ng-if="gamesNotFoundSeek">
             <p class="text-center">NO GAMES FOUND</p>
           </div>
 
@@ -154,7 +188,9 @@
           </div>
 
     </div>
-  </form>
+  </form> -->
+
+
   <div class='col-md-8 col-md-offset-2' ng-show='profile.gamesOffered.length && profile.gamesSeeking.length'>
     <a class='btn btn-primary btn-lg btn-block active center-block signin-btn' role='button' ui-sref='main'>See available game swaps in your city!</a>
   </div>
