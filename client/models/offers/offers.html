@@ -5,10 +5,13 @@
       <div ng-repeat="game in offers.offers"
           ng-click="offers.selectGame(game)"
           class="col-md-4 offered-game"
-          ng-class="{'selected-game': ({{game.id}} === selectedGame.id)}">
-          <div class="center">
-            <img ng-src="{{game.thumbnail}}" class="center boxart"/>
-            <p ng-bind="game.title" class="text-center"></p>
+          ng-class="{'selected-game': (game.id === offers.selectedGame.id)}">
+          <div class="center offer-boxart-container">
+            <img ng-src="{{game.thumbnail}}" class="center offer-boxart"/>
+          </div>
+          <div class="offer-footer">
+            <p ng-bind="game.title" class="text-center"></p><br>
+            <p class="text-center">({{game.platform}})</p>
           </div>
       </div>
     </div>
