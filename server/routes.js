@@ -201,7 +201,7 @@ router.post('/addtoseeking', auth.checkUser, function(req, res, next) {
   var title = req.body.game.name;
   var platform = req.body.game.userPlatform;
   var description = 'default description';
-  var thumbnail = req.body.game.image.thumb_url;
+  var thumbnail = req.body.game.image.medium_url;
   var rating = 5;
   var gbid = req.body.game.id;
 
