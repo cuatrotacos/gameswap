@@ -184,12 +184,22 @@ module.exports = {
     });
   },
 
+  allOfferingsByGame: function(gameid, callback) {
+    var sql = "SELECT Users.username FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+    var values = gameid;
+
+    connection.query(sql, values, function(err, data) {
+      if (err) console.log('errror in db allOfferingsByGame: ', err);
+      callback(data);
+    });
+  },
+
   allOfferings: function(callback) {
-    var sql = "SELECT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
+    var sql = "SELECT DISTINCT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
     connection.query(sql, function(err, games) {
       if (err) console.log('errror in db allOfferingsByGame: ', err);
       async.map(games, function(game, callback){
-        var sql = "SELECT Users.username, Users.id FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+        var sql = "SELECT Users.username, Users.id as userid FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
         var values = game.id;
         connection.query(sql, values, function(err, users) {
           if (err) console.log('errror in db allOfferingsByGame: ', err);
@@ -202,19 +212,9 @@ module.exports = {
     });
   },
 
-  allOfferingsByGame: function(gameid, callback) {
-    var sql = "SELECT Users.username FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
-    var values = gameid;
-
-    connection.query(sql, values, function(err, data) {
-      if (err) console.log('errror in db allOfferingsByGame: ', err);
-      callback(data);
-    });
-  },
-
   //returns all games that users are seeking in exchange for a particular game
   allWillingToSwap: function(gameid, callback) {
-    var sql = "SELECT Games.*, Users.username FROM Games LEFT JOIN Seeking ON (Seeking.gameid = Games.id) INNER JOIN Users ON (Users.id = Seeking.userid) LEFT JOIN Offering ON (Seeking.userid = Offering.userid) WHERE Offering.gameid = ?;";
+    var sql = "SELECT Games.*, Users.username, Users.id as userid FROM Games LEFT JOIN Seeking ON (Seeking.gameid = Games.id) INNER JOIN Users ON (Users.id = Seeking.userid) LEFT JOIN Offering ON (Seeking.userid = Offering.userid) WHERE Offering.gameid = ?;";
     var values = gameid;
 
     connection.query(sql, values, function(err, data) {

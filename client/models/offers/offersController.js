@@ -1,41 +1,66 @@
-angular.module('offers.controller', [])
-.controller('OffersController', function($http, AuthServices, OffersServices){
+angular.module('offers.controller', ['underscore'])
+.controller('OffersController', function($http, _, AuthServices, OffersServices){
 
   this.init = function() {
-    OffersServices.getOffers()
+    this.isAuth = AuthServices.isAuth();
+    OffersServices.getAllOffers()
     .then(function(offers){
-      console.log("+++line 7 offers", offers.data.offerings)
-      this.offers = offers.data.offerings;
+      this.offers = offers.data.games;
+      if (this.isAuth) {
+        //Get logged in user's offers
+        this.ownOffers = _.filter(this.offers, function(game){
+          return _.some(game.users, function(user) {
+            return user.userid === AuthServices.getUserid();
+          })
+        });
+      } else {
+        this.ownOffers = [];
+      }
     }.bind(this));
+    if (this.isAuth) {
+      //Get logged in user's wanted games
+      OffersServices.getUserWants()
+      .then(function(offers){
+        this.ownSeeking = offers.data.games;
+      }.bind(this));
+    }
   }
+
   this.selectedGame = {};
-  this.isAuth = AuthServices.isAuth();
-  this.viewSeeking = false;
   this.selectedUser = {};
   this.userWants= {};
+  this.allSeekingByGame = {};
+  this.gameMatches = [];
 
   this.selectGame = function(game) {
-    if (this.selectedGame === game) {
-      this.selectedGame = {};
-    } else {
-      this.selectedGame = game;
-    }
+    this.selectedGame = game;
     this.selectedUser = {};
+    this.userWants = {};
+    this.gameMatches = [];
+    //scroll down
+    OffersServices.allWillingToSwap(game.id)
+    .then(function(wants){
+      this.allSeekingByGame = wants.data.games;
+    }.bind(this));
   }
 
   this.userSeeking = function(user) {
+    //Get games sought after by selected user
     this.selectedUser = user;
-    console.log("Looking at seekings from", user);
-    OffersServices.getSeekingByUser(user.id)
-    .then(function(wants){
-      this.userWants = wants.data.games;
-      console.log("++28 offersCtrl userWants", this);
-    }.bind(this))
-    //set scope variable that changes the dimensions of the page
-    //Get the games that this user is seeking
-    //Select the games that you are offering that match what that user is looking for
-    //display a link to send a message if you're logged in
+    this.userWants = _.filter(this.allSeekingByGame, function(seeking) {
+      return seeking.userid === user.userid
+    });
+    if (this.isAuth){
+      var ownOffers = this.ownOffers;
+      this.gameMatches = _.filter(this.userWants, function(game) {
+        return _.some(ownOffers, function(ownOffer) {
+          return game.id === ownOffer.id;
+        })
+      })
+      console.log("We could trade these games", this.gameMatches)
+    }
   }
 
   this.init();
+
 })

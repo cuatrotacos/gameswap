@@ -27,7 +27,7 @@
       </div>
 
       <div class="col-md-4">
-        <p> All Users Offering {{offers.selectedGame.title}}</p>
+        <p> All Users Offering <strong>{{offers.selectedGame.title}}</strong></p>
         <table class="table borderless whitesmoke margin-bottom-ten">
           <tbody>
             <tr
@@ -41,8 +41,8 @@
 
       <div
       class="col-md-4"
-      ng-if="offers.selectedUser.id">
-        <p> {{offers.selectedUser.username}} would trade for these Games </p>
+      ng-if="offers.selectedUser.userid">
+        <p> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </p>
         <div class="container-fluid">
           <div ng-repeat="game in offers.userWants" class="col-lg-3 thumb">
             <div class="text-center">
