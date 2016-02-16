@@ -61,6 +61,10 @@ angular.module('offers.controller', ['underscore'])
     }
   }
 
+  this.offeredByYou = function(game) {
+    return _.contains(this.gameMatches, game);
+  }
+
   this.init();
 
 })

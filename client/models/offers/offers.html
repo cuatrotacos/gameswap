@@ -20,7 +20,7 @@
 
     <div class="row">
 
-      <div class="col-md-6 user-container">
+      <div class="col-md-6" id="user-container">
         <h4> All Users Offering <strong>{{offers.selectedGame.title}}</strong></h4>
         <table class="table borderless whitesmoke margin-bottom-ten">
           <tbody>
@@ -35,21 +35,32 @@
       </div>
 
       <div
-      class="col-md-6"
+      class="col-md-6 seeking-container"
       ng-if="offers.selectedUser.userid">
         <h4> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </h4>
-        <div class="container-fluid seeking-container">
-          <div ng-repeat="game in offers.userWants" class="col-lg-3 wanted-game">
-            <div class="text-center">
-              <img ng-src="{{game.thumbnail}}" class="wanted-boxart">
-                <p class="text-center" style="max-height: 25px">{{game.title}}</p>
-                <p class="text-center">({{game.platform}})</p>
-            </div>
-          </div>
-        </div>
+        <button type="button" class="btn btn-primary"
+        ng-if="offers.isAuth">
+        Message {{offers.selectedUser.username}}!</button>
+        <button type="button" class="btn btn-primary"
+        ng-if="!offers.isAuth"
+        ui-sref='signin'>
+        Sign in to Trade!</button>
+        <table class="table borderless whitesmoke margin-bottom-ten">
+          <tbody>
+            <tr>
+              <td class='col-md-2'><b>Offered by You?</b></td>
+              <td class='col-md-3'><b>Title</b></td>
+              <td class='col-md-2'><b>Platform</b></td>
+            </tr>
+            <tr ng-repeat="game in offers.userWants">
+              <td class='col-md-2'><span class="badge" ng-if="offers.offeredByYou(game)">Swap!</span></td>
+              <td class='col-md-3'>{{game.title}}</td>
+              <td class='col-md-2'>{{game.platform}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
     </div>
-
   </div>
 </div>

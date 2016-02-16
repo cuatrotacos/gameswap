@@ -1,6 +1,6 @@
 angular.module('offers.services', [])
 
-.factory('OffersServices', function($q, $http, $rootScope){
+.factory('OffersServices', function($q, $http, $rootScope, $location, $anchorScroll){
 
   var getAllOffers = function() {
     var q = $q.defer();
