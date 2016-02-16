@@ -253,13 +253,6 @@ router.post('/addmessage', auth.checkUser, function(req, res, next) {
   res.sendStatus(201);
 });
 
-router.get('/allOfferings', function(req, res, next) {
-  console.log("getting all game offerings");
-  db.allOfferings(function(data){
-    res.json({offerings: data})
-  })
-});
-
 router.get('/allOfferingsByGame', auth.checkUser, function(req, res, next) {
   var gameid = req.query.gameid;
   console.log("getting all game offerings for gameid #"+ gameid);
@@ -268,14 +261,25 @@ router.get('/allOfferingsByGame', auth.checkUser, function(req, res, next) {
   })
 });
 
+//Get all games that are being offered on the app
+router.get('/allOfferings', function(req, res, next) {
+  console.log("getting all game offerings");
+  db.allOfferings(function(data){
+    res.json({games: data})
+  })
+});
+
+//Get all games sought after by user, defaults to logged-in user if none queried
 router.get('/allSeekingByUser', auth.checkUser, function(req, res, next) {
   var userid = req.query.userid;
+  userid = userid || req.user.id;
   console.log("getting all game seekings for user #"+ userid);
   db.allSeekingByUser(userid, function(data){
     res.json({games: data})
   })
 });
 
+//Get all games users are willing to trade for inputted game
 router.get('/allWillingToSwap', function(req, res, next) {
   var gameid = req.query.gameid;
   console.log("getting all possible trades for game #"+ gameid);
@@ -283,6 +287,15 @@ router.get('/allWillingToSwap', function(req, res, next) {
     res.json({games: data})
   })
 });
+
+//Get all games offered by user, defaults to logged-in user if none queried
+router.get('/allOfferingByUser', auth.checkUser, function(req, res, next) {
+  var userid = req.query.userid;
+  userid = userid || req.user.id;
+  db.allOfferingByUser(req.user.id, function(data) {
+    res.json({games: data});
+  });
+})
 
 
 

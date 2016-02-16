@@ -184,12 +184,22 @@ module.exports = {
     });
   },
 
+  allOfferingsByGame: function(gameid, callback) {
+    var sql = "SELECT Users.username FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+    var values = gameid;
+
+    connection.query(sql, values, function(err, data) {
+      if (err) console.log('errror in db allOfferingsByGame: ', err);
+      callback(data);
+    });
+  },
+
   allOfferings: function(callback) {
     var sql = "SELECT DISTINCT Games.* from Games, Offering WHERE Games.id = Offering.gameid;";
     connection.query(sql, function(err, games) {
       if (err) console.log('errror in db allOfferingsByGame: ', err);
       async.map(games, function(game, callback){
-        var sql = "SELECT Users.username, Users.id FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
+        var sql = "SELECT Users.username, Users.id as userid FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
         var values = game.id;
         connection.query(sql, values, function(err, users) {
           if (err) console.log('errror in db allOfferingsByGame: ', err);
@@ -199,16 +209,6 @@ module.exports = {
       }, function(err, results) {
         callback(results)
       });
-    });
-  },
-
-  allOfferingsByGame: function(gameid, callback) {
-    var sql = "SELECT Users.username FROM Offering, Users WHERE Users.id = Offering.userid AND Offering.gameid = ?;";
-    var values = gameid;
-
-    connection.query(sql, values, function(err, data) {
-      if (err) console.log('errror in db allOfferingsByGame: ', err);
-      callback(data);
     });
   },
 

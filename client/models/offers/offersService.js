@@ -2,7 +2,7 @@ angular.module('offers.services', [])
 
 .factory('OffersServices', function($q, $http, $rootScope){
 
-  var getOffers = function() {
+  var getAllOffers = function() {
     var q = $q.defer();
     $http.get($rootScope.url + "/allOfferings")
     .then(function(offers){
@@ -24,20 +24,32 @@ angular.module('offers.services', [])
     return q.promise;
   }
 
-  // var getSeekingByUser = function(userid) {
-  //   var q = $q.defer();
-  //   $http.get($rootScope.url + "/allSeekingByUser?userid=" + userid)
-  //   .then(function(wants){
-  //     q.resolve(wants);
-  //   }, function(err){
-  //     q.resolve(err);
-  //   })
-  //   return q.promise;
-  // }
+  var getUserOffers = function() {
+    var q = $q.defer();
+    $http.get($rootScope.url + "/allOfferingByUser")
+    .then(function(offers){
+      q.resolve(offers);
+    }, function(err){
+      q.resolve(err);
+    })
+    return q.promise;
+  }
+
+  var getUserWants = function() {
+    var q = $q.defer();
+    $http.get($rootScope.url + "/allSeekingByUser")
+    .then(function(wants){
+      q.resolve(wants);
+    }, function(err){
+      q.resolve(err);
+    })
+    return q.promise;
+  }
 
   return {
-    getOffers: getOffers,
-    // getSeekingByUser: getSeekingByUser,
+    getUserOffers: getUserOffers,
+    getAllOffers: getAllOffers,
+    getUserWants: getUserWants,
     allWillingToSwap: allWillingToSwap
   }
 })

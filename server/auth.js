@@ -25,6 +25,6 @@ authenticateUser : function(id, email, res, req){
     var token = jwt.encode(payload, secret);
 
     res.set('token', token);
-    res.json({token: token});
+    res.json({token: token, userid: id});
   }
 }
