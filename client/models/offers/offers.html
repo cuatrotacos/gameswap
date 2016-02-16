@@ -1,7 +1,7 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">Games Available for Swapping!</p>
-    <div class="row game-container">
+    <div class="row offered-game-container">
       <div ng-repeat="game in offers.offers"
           ng-click="offers.selectGame(game)"
           class="col-md-4 offered-game"
@@ -20,22 +20,14 @@
 
     <div class="row">
 
-      <div class="col-md-4">
-        <div class="offered-game">
-          <div class="center">
-            <img ng-src="{{offers.selectedGame.thumbnail}}" class="center boxart"/>
-            <p ng-bind="offers.selectedGame.title" class="text-center"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <p> All Users Offering <strong>{{offers.selectedGame.title}}</strong></p>
+      <div class="col-md-6 user-container">
+        <h4> All Users Offering <strong>{{offers.selectedGame.title}}</strong></h4>
         <table class="table borderless whitesmoke margin-bottom-ten">
           <tbody>
             <tr
             ng-repeat="user in offers.selectedGame.users"
-            ng-click="offers.userSeeking(user)">
+            ng-click="offers.userSeeking(user)"
+            class="user-offering">
               <td ng-bind="user.username"></td>
             </tr>
           </tbody>
@@ -43,29 +35,20 @@
       </div>
 
       <div
-      class="col-md-4"
+      class="col-md-6"
       ng-if="offers.selectedUser.userid">
-        <p> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </p>
-        <div class="container-fluid">
-          <div ng-repeat="game in offers.userWants" class="col-lg-3 thumb">
+        <h4> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </h4>
+        <div class="container-fluid seeking-container">
+          <div ng-repeat="game in offers.userWants" class="col-lg-3 wanted-game">
             <div class="text-center">
-              <img ng-src="{{game.thumbnail}}" class="img-thumbnail">
+              <img ng-src="{{game.thumbnail}}" class="wanted-boxart">
                 <p class="text-center" style="max-height: 25px">{{game.title}}</p>
+                <p class="text-center">({{game.platform}})</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- <div
-      class="col-md-4"
-      ng-if="!offers.selectedUser.id">
-        <p>Swap for any of these Games</p>
-      </div> -->
-
-    </div>
-
-    <div class="line-break">
-      This is the call to action! (Log in to trade!)
     </div>
 
   </div>

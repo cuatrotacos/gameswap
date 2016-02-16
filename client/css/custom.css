@@ -183,22 +183,11 @@ div {
 	box-sizing: border-box;
 }
 
-.offer-boxart-container {
-	vertical-align: top;
-	margin: auto auto;
-	height: 75%;
-	/*background-color: #7CB3E4;*/
+.offered-game-container {
+	overflow-x: auto;
+	white-space: nowrap;
 }
-.offer-boxart {
-	max-width: 290px;
-	max-height: 350px;
-	margin: auto auto;
-	padding-top: 10px;
-	display: block;
-	-webkit-box-shadow: 0 10px 6px -6px #777;
-	-moz-box-shadow: 0 10px 6px -6px #777;
-	box-shadow: 0 10px 6px -6px #777;
-}
+
 .offered-game {
 	height: 500px;
 	width: 350px;
@@ -218,6 +207,24 @@ div {
 	/*overflow-y: scroll;*/
 }
 
+.offer-boxart-container {
+	vertical-align: top;
+	margin: auto auto;
+	height: 75%;
+	/*background-color: #7CB3E4;*/
+}
+.offer-boxart {
+	max-width: 290px;
+	max-height: 350px;
+	margin: auto auto;
+	padding-top: 10px;
+	display: block;
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+}
+
+
 .offered-game:hover {
 	cursor: pointer;
 }
@@ -228,16 +235,38 @@ div {
 	padding: 5px;
 }
 
-.game-container {
-	overflow-x: auto;
-	white-space: nowrap;
-}
-
 .selected-game {
 	background-color: gold;
 	-webkit-box-shadow: 0 0px 20px 5px gold;
 	-moz-box-shadow: 0 0px 20px 5px gold;
 	box-shadow: 0 0px 20px 5px gold;
+}
+
+.user-offering:hover {
+	cursor: pointer;
+}
+
+.user-container {
+	overflow-y: scroll;
+	height: 400px;
+}
+
+.seeking-container {
+	overflow-y: scroll;
+	height: 400px;
+}
+
+.wanted-game {
+	max-height: 250px;
+	max-width: 200px;
+	display: inline-block;
+}
+
+.wanted-boxart {
+	max-width: 100%;
+  max-height: 100%;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 /*
