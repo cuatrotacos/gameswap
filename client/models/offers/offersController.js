@@ -7,6 +7,7 @@ angular.module('offers.controller', ['underscore'])
     .then(function(offers){
       this.allOffers = offers.data.games;
       this.offers = this.allOffers;
+      this.loading = false;
       this.offerFilter = false;
       console.log("They are offering", this.offers)
       if (this.isAuth) {
@@ -30,6 +31,7 @@ angular.module('offers.controller', ['underscore'])
     }
   }
   var self = this;
+  this.loading = true;
   this.selectedGame = {};
   this.selectedUser = {};
   this.userWants= {};

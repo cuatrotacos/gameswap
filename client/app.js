@@ -29,7 +29,7 @@ angular
 			  url: '/',
         views: {
           "": {
-            templateUrl: './models/main/main.html'
+            templateUrl: './models/offers/offers.html'
           },
           "navbar" : {
             templateUrl: './models/navbar/navbar.html'

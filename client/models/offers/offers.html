@@ -1,8 +1,11 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">Games Available for Swapping!</p>
-    <div ng-if="offers.isAuth">
-      <!-- <div class="radio">
+    <div>
+      <div class="text-center" ng-if="offers.loading">
+        <img src="../../assets/loading.gif">
+      </div>
+      <!-- <div ng-if="offers.isAuth" class="radio">
         <label>
           <input type="radio" ng-model="offers.offerFilter" ng-value="off">
             See all games being offered
