@@ -4,9 +4,6 @@ angular.module('userprofile', [])
     var userInfo = this;
 
     $scope.isCollapsed = true;
-
-    this.gamesOffered = [];
-    this.gamesSeeking = [];
     this.updateClicked = false;
     $scope.getGBGamesOffer
     $scope.getGBGamesSeek
@@ -14,8 +11,8 @@ angular.module('userprofile', [])
     $scope.loadingOffer = false;
     $scope.loadingSeek = false;
     $scope.gamesNotFoundSeek = false;
-    $scope.droppedGamedWanted = [];
-    $scope.droppedGamedOffered = [];
+    $scope.droppedGamedWanted;
+    $scope.droppedGamedOffered;
     $scope.centerAnchor = true;
 
     var loadProfile = function() {
@@ -25,8 +22,8 @@ angular.module('userprofile', [])
           userInfo.username = resp.username;
           userInfo.email = resp.email;
           userInfo.city = resp.city || 'santa monica';
-          userInfo.gamesOffered = resp.offerings;
-          userInfo.gamesSeeking = resp.seeking;
+          $scope.droppedGamedOffered = resp.offerings;
+          $scope.droppedGamedWanted = resp.seeking;
         });
     };
 
@@ -94,7 +91,7 @@ angular.module('userprofile', [])
       }
     };
 
-    this.addOffer = function(game) {
+    $scope.addOffer = function(game) {
       $scope.getGBGamesOffer = null;
       $scope.loadingOffer = true;
       ProfileServices.addGameOffering(game)
@@ -104,7 +101,7 @@ angular.module('userprofile', [])
       });
     }
 
-    this.addSeek = function(game) {
+    $scope.addSeek = function(game) {
       ProfileServices.addGameSeeking(game)
       .then(function(resp) {
         $scope.loadingSeek = false;
@@ -132,6 +129,7 @@ angular.module('userprofile', [])
       var index = $scope.droppedGamedWanted.indexOf(data);
       if (index == -1){
         $scope.droppedGamedWanted.unshift(data);
+        $scope.addSeek(data);
       }
       console.log($scope.droppedGamedWanted, "games Wanted")
     }
@@ -140,26 +138,27 @@ angular.module('userprofile', [])
       var index = $scope.droppedGamedOffered.indexOf(data);
       if (index == -1) {
         $scope.droppedGamedOffered.unshift(data);
+        $scope.addOffer(data);
       }
       console.log($scope.droppedGamedOffered, "games offered")
 
     }
-    $scope.onDragSuccess1=function(data,evt){
-      var index = $scope.droppedGamedWanted.indexOf(data);
-      if (index > -1) {
-          $scope.droppedGamedWanted.splice(index, 1);
-          $scope.addSeek(data);
-      }
-      console.log($scope.droppedGamedWanted, "games Wanted")
-    }
+    // $scope.onDragSuccess1=function(data,evt){
+    //   var index = $scope.droppedGamedWanted.indexOf(data);
+    //   if (index > -1) {
+    //       $scope.droppedGamedWanted.splice(index, 1);
+    //       $scope.addSeek(data);
+    //   }
+    //   console.log($scope.droppedGamedWanted, "games Wanted")
+    // }
 
-    $scope.onDragSuccess2=function(data,evt){
-      var index = $scope.droppedGamedOffered.indexOf(data);
-      if (index > -1) {
-          $scope.droppedGamedOffered.splice(index, 1);
-      }
-      console.log($scope.droppedGamedOffered, "games offered")
-    }
+    // $scope.onDragSuccess2=function(data,evt){
+    //   var index = $scope.droppedGamedOffered.indexOf(data);
+    //   if (index > -1) {
+    //       $scope.droppedGamedOffered.splice(index, 1);
+    //   }
+    //   console.log($scope.droppedGamedOffered, "games offered")
+    // }
 
     $scope.toggleCenterAnchor = function () {
       $scope.centerAnchor = !$scope.centerAnchor
