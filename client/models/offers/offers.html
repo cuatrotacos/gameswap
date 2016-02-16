@@ -1,6 +1,20 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">Games Available for Swapping!</p>
+    <div ng-if="offers.isAuth">
+      <!-- <div class="radio">
+        <label>
+          <input type="radio" ng-model="offers.offerFilter" ng-value="off">
+            See all games being offered
+          </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" ng-model="offers.offerFilter" ng-value="on">
+            See only games you're seeking
+          </label>
+      </div>
+    </div> -->
     <div class="row offered-game-container">
       <div ng-repeat="game in offers.offers"
           ng-click="offers.selectGame(game)"
