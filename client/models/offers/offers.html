@@ -1,14 +1,31 @@
 <div class='container-fluid' ng-controller="OffersController as offers">
   <div class="jumbotron head-space-md">
     <p class="text-center">Games Available for Swapping!</p>
-    <div class="row game-container">
+    <div ng-if="offers.isAuth">
+      <!-- <div class="radio">
+        <label>
+          <input type="radio" ng-model="offers.offerFilter" ng-value="off">
+            See all games being offered
+          </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" ng-model="offers.offerFilter" ng-value="on">
+            See only games you're seeking
+          </label>
+      </div>
+    </div> -->
+    <div class="row offered-game-container">
       <div ng-repeat="game in offers.offers"
           ng-click="offers.selectGame(game)"
           class="col-md-4 offered-game"
-          ng-class="{'selected-game': ({{game.id}} === selectedGame.id)}">
-          <div class="center">
-            <img ng-src="{{game.thumbnail}}" class="center boxart"/>
-            <p ng-bind="game.title" class="text-center"></p>
+          ng-class="{'selected-game': (game.id === offers.selectedGame.id)}">
+          <div class="center offer-boxart-container">
+            <img ng-src="{{game.thumbnail}}" class="center offer-boxart"/>
+          </div>
+          <div class="offer-footer">
+            <p ng-bind="game.title" class="text-center"></p><br>
+            <p class="text-center">({{game.platform}})</p>
           </div>
       </div>
     </div>
@@ -17,22 +34,14 @@
 
     <div class="row">
 
-      <div class="col-md-4">
-        <div class="offered-game">
-          <div class="center">
-            <img ng-src="{{offers.selectedGame.thumbnail}}" class="center boxart"/>
-            <p ng-bind="offers.selectedGame.title" class="text-center"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <p> All Users Offering <strong>{{offers.selectedGame.title}}</strong></p>
+      <div class="col-md-6" id="user-container">
+        <h4> All Users Offering <strong>{{offers.selectedGame.title}}</strong></h4>
         <table class="table borderless whitesmoke margin-bottom-ten">
           <tbody>
             <tr
             ng-repeat="user in offers.selectedGame.users"
-            ng-click="offers.userSeeking(user)">
+            ng-click="offers.userSeeking(user)"
+            class="user-offering">
               <td ng-bind="user.username"></td>
             </tr>
           </tbody>
@@ -40,30 +49,32 @@
       </div>
 
       <div
-      class="col-md-4"
+      class="col-md-6 seeking-container"
       ng-if="offers.selectedUser.userid">
-        <p> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </p>
-        <div class="container-fluid">
-          <div ng-repeat="game in offers.userWants" class="col-lg-3 thumb">
-            <div class="text-center">
-              <img ng-src="{{game.thumbnail}}" class="img-thumbnail">
-                <p class="text-center" style="max-height: 25px">{{game.title}}</p>
-            </div>
-          </div>
-        </div>
+        <h4> {{offers.selectedUser.username}} would trade <strong>{{offers.selectedGame.title}}</strong> for these Games </h4>
+        <button type="button" class="btn btn-primary"
+        ng-if="offers.isAuth">
+        Message {{offers.selectedUser.username}}!</button>
+        <button type="button" class="btn btn-primary"
+        ng-if="!offers.isAuth"
+        ui-sref='signin'>
+        Sign in to Trade!</button>
+        <table class="table borderless whitesmoke margin-bottom-ten">
+          <tbody>
+            <tr>
+              <td class='col-md-2'><b>Offered by You?</b></td>
+              <td class='col-md-3'><b>Title</b></td>
+              <td class='col-md-2'><b>Platform</b></td>
+            </tr>
+            <tr ng-repeat="game in offers.userWants">
+              <td class='col-md-2'><span class="badge" ng-if="offers.offeredByYou(game)">Swap!</span></td>
+              <td class='col-md-3'>{{game.title}}</td>
+              <td class='col-md-2'>{{game.platform}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      <!-- <div
-      class="col-md-4"
-      ng-if="!offers.selectedUser.id">
-        <p>Swap for any of these Games</p>
-      </div> -->
-
     </div>
-
-    <div class="line-break">
-      This is the call to action! (Log in to trade!)
-    </div>
-
   </div>
 </div>

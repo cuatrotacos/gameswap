@@ -143,7 +143,7 @@ module.exports = {
   },
 
   allOfferingByUser: function (userid, callback) {
-    var sql = "SELECT Games.title, Games.rating, Games.description, Games.platform, Games.thumbnail, Offering.createdat FROM Games, Offering WHERE Games.id = Offering.gameid AND Offering.userid = '" + userid + "';";
+    var sql = "SELECT Games.id, Games.title, Games.rating, Games.description, Games.platform, Games.thumbnail, Offering.createdat FROM Games, Offering WHERE Games.id = Offering.gameid AND Offering.userid = '" + userid + "';";
 
     connection.query(sql, function (err, data) {
       if (err) {
@@ -154,7 +154,7 @@ module.exports = {
   },
 
   allSeekingByUser: function (userid, callback) {
-    var sql = "SELECT Games.title, Games.rating, Games.description, Games.platform, Games.thumbnail, Seeking.createdat FROM Games, Seeking WHERE Games.id = Seeking.gameid AND Seeking.userid = '" + userid + "';";
+    var sql = "SELECT Games.id, Games.title, Games.rating, Games.description, Games.platform, Games.thumbnail, Seeking.createdat FROM Games, Seeking WHERE Games.id = Seeking.gameid AND Seeking.userid = '" + userid + "';";
 
     connection.query(sql, function (err, data) {
       if (err) {
